@@ -1,0 +1,8 @@
+#wrapper {
+  width: 120vmin;
+  margin: auto;
+}
+
+#build-wrap {
+  font-size: calc(0.5rem + 0.3vmin);
+}
