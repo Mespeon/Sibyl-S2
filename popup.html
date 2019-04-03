@@ -1,56 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="/css/popup.css">
-
-    <!-- ONBOARD STYLES -->
-    <style>
-      body {
-        width: 300px;
-        height: 100px;
-        padding: 2%;
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        padding: 0px;
-        margin: 0px;
-      }
-
-      #header {
-        margin-bottom: calc(0.5rem + 6vmin);
-        border-bottom: 1px solid #ccc;
-      }
-
-      #header h1, #actions h1  {
-        color: #00a99d;
-        font-size: calc(0.5rem + 8vmin);
-      }
-
-      #header h2 {
-        color: #777;
-        font-size: calc(0.5rem + 3vmin);
-      }
-
-      #header h2.subhead {
-        font-weight: normal;
-        margin-bottom: calc(0.5rem + 6vmin); /* Maintain same distances as header */
-      }
-
-      #header h2.alert {
-        color: #999;
-      }
-
-      .subtext {
-        font-size: calc(0.5rem + 3vmin);
-        color: #999;
-      }
-
-    </style>
-  </head>
-
-  <body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/css/popup.css">
+</head>
+<body>
+  <div id="wrapper">
     <!-- EXTENSION POPUP HEADER -->
     <div id="header">
       <h1>Sibyl <span class="subtext">The Web API for Forms</span></h1>
@@ -61,14 +17,47 @@
     <!-- EXTENSION POPUP ACTIONS -->
     <div id="actions">
       <h1>Actions <span class="subtext">What would you like to do?</span></h1>
-      <a href="/builder.html" target="_blank" id="popup--generateForm-link" class="button-links">Generate Form</a>
+      <!-- ACTION CARDS -->
+      <!-- Register -->
+      <div class="cards login">
+        <div class="cardholder">
+          <a href="#" rel="noopener" target="_blank" class="card">
+            <div class="card-container">
+              <div class="card-title">Register</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sign In -->
+      <div class="cards generateForm">
+        <div class="cardholder">
+          <a href="#" rel="noopener" target="_blank" class="card">
+            <div class="card-container">
+              <div class="card-title">Sign In</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Generate Form -->
+      <div class="cards generateForm">
+        <div class="cardholder">
+          <a href="/builder.html" rel="noopener" target="_blank" class="card">
+            <div class="card-container">
+              <div class="card-title">Create a Form</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
     <!-- END EXTENSION POPUP ACTIONS -->
 
     <!-- EXTENSION POPUP FOOTER -->
     <div id="footer">
-
+      <span class="footer--text">Project Sibyl S2 - A Thesis Work in Progress</span>
     </div>
     <!-- END EXTENSION POPUP HEADER -->
-  </body>
+  </div>
+</body>
 </html>

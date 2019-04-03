@@ -2,18 +2,58 @@
 <head>
   <title>Sibyl Form Builder - Powered by jQuery Form Builder</title>
   <!-- SCRIPTS FOR THE FORM BUILDER -->
-  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="/node_modules/jquery-ui-sortable/jquery-ui.min.js"></script>
-  <script src="/node_modules/formBuilder/dist/form-builder.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery-ui.min.js"></script>
+  <script src="/formBuilder/src/js/form-builder.min.js"></script>
+  <script src="/formBuilder/src/js/form-render.min.js"></script>
   <script src="/js/startForm.js"></script>
 
   <link rel="stylesheet" href="/css/builder.css">
 </head>
 <body>
   <div id="wrapper">
-    <h1>FORM BUILDER</h1>
-    <h4>Use this form builder to generate your own survey form for any situation.</h4>
+    <!-- HEADERS -->
+    <div id="headers--container" class="flexbox">
+      <h1 class="builder--header">Form Builder</h1>
+      <!-- How to Use Button -->
+      <div class="cards user-guide--button">
+        <div class="cardholder">
+          <a href="#" rel="noopener" class="card">
+            <div class="card-container">
+              <div class="card-title">How to Use</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="builder--subheader-container">
+      <span class="builder--subheader">Use this form builder to generate your own survey form.</span>
+    </div>
+
+    <!-- The form builder and renderer itself -->
+    <!-- DO NOT TOUCH OR EDIT ANYTHING WITHIN. -->
     <div id="build-wrap"></div>
+    <div id="build-render-headers">
+      <div class="flexbox">
+        <h1 class="builder--header">Preview</h1>
+      </div>
+      <div class="builder--subheader-container multirow">
+        <span class="builder--subheader">This is how your form will look like out there. It is styled, don't worry.</span>
+      </div>
+    </div>
+    <div id="build-render">
+      <form action="#"></form>
+      <button class="btn btn-default edit-form">Edit</button>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer">
+      <span class="footer--text">Project Sibyl S2 - A Thesis Work in Progress | Form Builder powered by jQuery Form Builder | Modified by MN</span>
+      <span class="footer--text">
+        Sibyl S2 (<a href="https://github.com/Mespeon/Sibyl-S2" rel="noopener" target="_blank">GitHub</a>)
+        jQuery Form Builder (<a href="https://github.com/kevinchappell/formBuilder" rel="noopener" target="_blank">GitHub</a>)
+      </span>
+    </div>
   </div>
 </body>
 </html>
