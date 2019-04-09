@@ -23,13 +23,17 @@ a {
   text-decoration: none;
 }
 
-#wrapper {
+a:visited {
+  color: #333;
+}
+
+.wrapper {
   width: 90%;
   margin: auto;
   margin-top: calc(0.5rem + 2vmin);
 }
 
-#header {
+.header {
   margin-bottom: calc(0.5rem + 6vmin);
   border-bottom: 1px solid #ccc;
 }
@@ -41,22 +45,22 @@ a {
   padding-bottom: calc(0.5rem + 2vmin);
 }
 
-#header h1, #actions h1  {
+.header h1, #actions h1  {
   color: #00a99d;
   font-size: calc(0.5rem + 6vmin);
 }
 
-#header h2 {
+.header h2 {
   color: #777;
   font-size: calc(0.5rem + 3vmin);
 }
 
-#header h2.subhead {
+.header h2.subhead {
   font-weight: normal;
   margin-bottom: calc(0.5rem + 6vmin); /* Maintain same distances as header */
 }
 
-#header h2.alert {
+.header h2.alert {
   color: #999;
 }
 
@@ -70,10 +74,91 @@ a {
   color: #999;
 }
 
+/* FOR REGISTER WINDOW */
+.nav-flexbox {
+  display: flex;
+  flex-flow: row nowrap;
+  vertical-align: middle;
+  align-items: center;
+  margin-bottom: calc(0.5rem + 2vmin);
+}
+
+.nav-flexbox--contents {
+  padding-right: calc(0.5rem + 1vmin);
+}
+
+.material-icons {
+  color: #999;
+}
+
+.header--text {
+  font-size: calc(0.5rem + 6vmin);
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #00aa9d;
+}
+
+#register-form input.input--text {
+  padding: 0.5rem;
+  font-size: calc(0.5rem + 2vmin);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#submit--reg-form, #reset--reg-form {
+  padding: 0.5rem;
+  background-color: #00a99d;
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0px 5px rgba(100,100,100,0.20), 0 0px 5px rgba(100,100,100,0.20);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+#submit--reg-form:hover, #reset--reg-form:hover {
+  background-color: #00cc73;
+  box-shadow: 5px rgba(100,100,100,0.50), 5px rgba(100,100,100,0.50);
+  cursor: pointer;
+}
+
+#reset--reg-form {
+  background-color: #f44336;
+}
+
+#reset--reg-form:hover {
+  background-color: #ff1744;
+}
+
+.form--table-controls {
+  text-align: right;
+}
+
+.form--table {
+  border-collapse: collapse;
+}
+
+.form--table span {
+  font-size: calc(0.5rem + 1vmin);
+  font-weight: bold;
+  color: #999;
+}
+
+.form--table .field--label {
+  font-size: calc(0.5rem + 1vmin);
+  color: #999;
+  text-align: right;
+}
+
+.form--table td {
+  padding: 0.5rem;
+}
+
 /* LINK CARDS */
 .cards {
-    margin-top: calc(0.5rem + 1vmin);
-    display: inline-block;
+  margin-top: calc(0.5rem + 1vmin);
+  display: inline-block;
 }
 
 .cardholder {

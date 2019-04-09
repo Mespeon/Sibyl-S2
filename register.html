@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+  <title>Register - Sibyl</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/popup.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- HEADER -->
+    <div class="header">
+      <div id="register-header" class="nav-flexbox">
+        <div class="nav-flexbox--contents">
+          <a href="/popup.html" rel="noopener" target="_self" class="material-icons">arrow_back</a>
+        </div>
+        <div class="nav-flexbox--contents">
+          <span class="header--text">Register</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <div id="regform--parent-container">
+      <form action="https://marknolledo.pythonanywhere.com/register/register" method="POST" target="_blank" id="register-form" name="register-form">
+        <table class="form--table">
+          <tr>
+            <td colspan="2"><span>All fields are required.</span></td>
+          </tr>
+
+          <tr>
+            <td class="field--label">Username</td>
+            <td><input type="text" id="register-username" class="input--text" name="register-username" maxlength="24" size="20" value="" required/></td>
+          </tr>
+
+          <tr>
+            <td class="field--label">First Name</td>
+            <td><input type="text" id="register-firstname" class="input--text" name="register-firstname" maxlength="30" size="20" value="" required/></td>
+          </tr>
+
+          <tr>
+            <td class="field--label">Last Name</td>
+            <td><input type="text" id="register-lastname" class="input--text" name="register-lastname" maxlength="30" size="20" value="" required/></td>
+          </tr>
+
+          <tr>
+            <td class="field--label">Password</td>
+            <td><input type="password" id="register-password" class="input--text" name="register-password" maxlength="24" size="20" value="" required/></td>
+          </tr>
+
+          <tr>
+            <td class="field--label">Confirm Password</td>
+            <td><input type="password" id="conf-register-password" class="input--text" name="conf-register-password" maxlength="24" size="20" value="" required/></td>
+          </tr>
+
+          <tr class="form--table-controls">
+            <td colspan="2">
+              <input type="submit" id="submit--reg-form" name="submit--reg-form" value="Submit">
+              <input type="reset" id="reset--reg-form" name="reset--reg-form" value="Reset">
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer">
+      <span class="footer--text">Project Sibyl S2 - A Thesis Work in Progress</span>
+    </div>
+  </div>
+
+  <!-- PLACED IN LAST PORTION IN ORDER TO GENERATE OBJECTS FIRST -->
+  <script src="/js/behaviors.js"></script>
+</body>
+</html>
