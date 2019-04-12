@@ -16,5 +16,6 @@ The installation is successful if a Sibyl 0.3 extension is added to your install
 1. Form Builder powered by the jQuery Form Builder found here (https://formbuilder.online/)
 2. The Sibyl Endpoint, hosted at (https://pythonanywhere.com) | Repository (https://github.com/Mespeon/Sibyl-S2-Backend)
 3. User registry (register only; sign in pipelined for deployment)
+4. Lexicon Match sentiment analysis (dead simple; could use some improvement)
 
 More coming soon!
