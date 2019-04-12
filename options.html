@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="/css/options.css">
+  <script src="/js/jquery.min.js"></script>
 </head>
 
 <body>
@@ -15,30 +16,63 @@
     </div>
 
     <div id="content--options-page">
-      <div id="content--option-parent-container">
-        <!-- LEXICON -->
-        <div class="content--option-container">
-          <h1 class="content--option-header">Test Sentiment Analysis<br/>(Lexicon Matching)</h1>
-          <form action="https://marknolledo.pythonanywhere.com/register/register" target="_blank" method="POST" id="form-analyze-single" name="form-analyze-single">
-            <label>Enter text</label><br/>
-            <textarea name="name" id="ta--comment" name="ta--comment" form="form-analyze-single" maxlength="100" cols="30" rows="10"></textarea><br/>
-            <input type="submit" id="submit--analyze-single" name="submit--analyze-single" value="Submit">
-          </form>
-        </div>
+      <div id="option--sentiment-tester" class="content--option-group">
+        <h1 class="content--option-header">Sentiment Analysis Testers</h1>
+        <span class="header--text">Try out two of our algorithms and be amazed by some awesomeness.</span>
+        <span class="header--text">You may enter short one-liners, but it seems that these algorithms prefer something longer than that.</span>
+        <span class="warn header--text">Please do note that these algorithms are still under development and may produce inaccurate results from time to time.</span>
+        <div class="content--option-parent-container">
+          <!-- LEXICON -->
+          <div class="content--option-container">
+            <h1 class="content--option-header">Lexicon Matching</h1>
+            <form action="http://marknolledo.pythonanywhere.com/sibyl/analyze/mode=lexicon" method="POST" id="form-analyze-single" name="form-analyze-single" class="dev-form">
+              <label>Enter text</label><br/>
+              <textarea id="comment" name="comment" form="form-analyze-single" maxlength="100" cols="55" rows="10"></textarea><br/>
+              <input type="submit" id="submit--analyze-single" name="submit--analyze-single" class="submit-button" value="Submit for Lexicon Matching">
+            </form>
 
-        <!-- CLASSIFIER -->
-        <div class="content--option-container">
-          <h1 class="content--option-header">Test Sentiment Analysis<br/>(Naive Bayes Classifier)</h1>
-          <form action="https://marknolledo.pythonanywhere.com/register/register" target="_blank" method="POST" id="form-analyze-single" name="form-analyze-single">
-            <label>Enter text</label><br/>
-            <textarea name="name" id="ta--comment" name="ta--comment" form="form-analyze-single" maxlength="100" cols="30" rows="10"></textarea><br/>
-            <input type="submit" id="submit--analyze-single" name="submit--analyze-single" value="Submit">
+            <span class="small-header">Lexicon Match Results</span>
+            <span id="lexicon-result" class="result--indicator">If you see this default text after submitting the form, something went wrong in the JSON data parsing.</span>
+          </div>
+
+          <!-- CLASSIFIER -->
+          <!-- http://marknolledo.pythonanywhere.com/sibyl/analyze/mode=lexicon -->
+          <div class="content--option-container">
+            <h1 class="content--option-header">Naive Bayes Classifier</h1>
+            <form action="http://marknolledo.pythonanywhere.com/sibyl/analyze/mode=lexicon" method="POST" id="form-classify-single" name="form-classify-single" class="dev-form">
+              <label>Enter text</label><br/>
+              <textarea id="classify-comment" name="classify-comment" form="form-classify-single" maxlength="100" cols="55" rows="10"></textarea><br/>
+              <input type="submit" id="submit--classify-single" name="submit--classify-single" class="submit-button" value="Submit for Classifier Analysis">
+            </form>
+
+            <span class="small-header">Classifier Results</span>
+            <span id="classify-result" class="result--indicator">If you see this default text after submitting the form, something went wrong in the JSON data parsing.</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="option--form-builder" class="content--option-group">
+        <h1 class="content--option-header">Form Builder</h1>
+        <span class="header--text">View the Form Builder. Might as well give it a try.</span>
+        <div id="view-builder--button-container">
+          <form action="builder.html" method="POST" target="_blank">
+            <input type="submit" class="btn" value="View Form Builder" />
           </form>
         </div>
       </div>
+
+      <div id="option--ping-endpoint" class="content--option-group">
+        <h1 class="content--option-header">Ping the Endpoint</h1>
+        <span class="header--text">Irritate the endpoint by sending requests and receiving a JSON response.</span>
+        <span class="warn header--text">This section is under development.</span>
+      </div>
+    </div>
+
+    <div id="footer">
+      <span class="footer--text">Project Sibyl S2 - A Thesis Work in Progress | Powered by pythonanywhere, GitHub, and love.</span>
     </div>
   </div>
 
-  <script src="/js/behaviors.js"></script>
+  <script src="/js/test-analysis-ajax.js"></script>
 </body>
 </html>
