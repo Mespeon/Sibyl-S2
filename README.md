@@ -17,5 +17,7 @@ The installation is successful if a Sibyl 0.3 extension is added to your install
 2. The Sibyl Endpoint, hosted at (https://pythonanywhere.com) | Repository (https://github.com/Mespeon/Sibyl-S2-Backend)
 3. User registry (register only; sign in pipelined for deployment)
 4. Lexicon Match sentiment analysis (dead simple; could use some improvement)
+5. Developer Options (open popup > Developer Options)
+6. Sentiment analysis tester (uses the Lexicon Match algorithm; Classifier algorithm pipelined for deployment)
 
 More coming soon!
