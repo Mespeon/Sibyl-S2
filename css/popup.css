@@ -74,6 +74,16 @@ a:visited {
   color: #999;
 }
 
+a#link--options-page {
+  color: #00a99d;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+a#link--options-page:hover {
+  color: #00cc73;
+}
+
 /* FOR REGISTER WINDOW */
 .nav-flexbox {
   display: flex;
@@ -87,12 +97,12 @@ a:visited {
   padding-right: calc(0.5rem + 1vmin);
 }
 
-.material-icons {
+a.material-icons {
   color: #999;
 }
 
 .header--text {
-  font-size: calc(0.5rem + 6vmin);
+  font-size: calc(0.5rem + 4vmin);
   font-weight: bold;
   font-family: sans-serif;
   color: #00aa9d;

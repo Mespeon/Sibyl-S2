@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <title>Sibyl - Developer Options</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="/css/options.css">
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="header--options-page">
+      <h1>Developer Options</h1>
+      <span class="header--text">Want to try something? Here's where you do it.</span>
+    </div>
+
+    <div id="content--options-page">
+      <div id="content--option-parent-container">
+        <!-- LEXICON -->
+        <div class="content--option-container">
+          <h1 class="content--option-header">Test Sentiment Analysis<br/>(Lexicon Matching)</h1>
+          <form action="https://marknolledo.pythonanywhere.com/register/register" target="_blank" method="POST" id="form-analyze-single" name="form-analyze-single">
+            <label>Enter text</label><br/>
+            <textarea name="name" id="ta--comment" name="ta--comment" form="form-analyze-single" maxlength="100" cols="30" rows="10"></textarea><br/>
+            <input type="submit" id="submit--analyze-single" name="submit--analyze-single" value="Submit">
+          </form>
+        </div>
+
+        <!-- CLASSIFIER -->
+        <div class="content--option-container">
+          <h1 class="content--option-header">Test Sentiment Analysis<br/>(Naive Bayes Classifier)</h1>
+          <form action="https://marknolledo.pythonanywhere.com/register/register" target="_blank" method="POST" id="form-analyze-single" name="form-analyze-single">
+            <label>Enter text</label><br/>
+            <textarea name="name" id="ta--comment" name="ta--comment" form="form-analyze-single" maxlength="100" cols="30" rows="10"></textarea><br/>
+            <input type="submit" id="submit--analyze-single" name="submit--analyze-single" value="Submit">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/behaviors.js"></script>
+</body>
+</html>
