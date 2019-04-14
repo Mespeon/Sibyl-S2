@@ -13,6 +13,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: sans-serif;
+  color: #444;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,6 +29,13 @@ a {
 #wrapper {
   width: calc(0.5rem + 100vmin);
   margin: auto;
+}
+
+#build-wrap, #build-render {
+  padding: calc(0.5rem + 2vmin);
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 0 0px 10px rgba(100,100,100,0.10), 0 0px 10px rgba(100,100,100,0.10);
 }
 
 #headers--container {
@@ -56,6 +64,7 @@ a {
 .builder--subheader {
   color: #999;
   font-weight: bold;
+  display: block;
 }
 
 .multirow {
@@ -76,7 +85,7 @@ a {
   margin-bottom: calc(0.5rem + 2vmin);
 }
 
-#build-render button {
+#build-render button.render-controls {
   padding: calc(0.5rem + 0.5vmin);
   background-color: #00a99d;
   color: #fff;
@@ -86,13 +95,59 @@ a {
   box-shadow: 0 0px 5px rgba(100,100,100,0.20), 0 0px 5px rgba(100,100,100,0.20);
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
-  margin-left: calc(0.5rem + 94vmin);
+  /* margin-left: calc(0.5rem + 93vmin); */
+  display: inline;
 }
 
-#build-render button:hover {
+#build-render button.render-controls:hover {
   background-color: #00cc73;
   box-shadow: 5px rgba(100,100,100,0.50), 5px rgba(100,100,100,0.50);
   cursor: pointer;
+}
+
+#build-render button.export-html {
+  background-color: #ff9800;
+}
+
+#build-render button.export-html:hover {
+  background-color: #ffa726;
+}
+
+#build-render button.copy-html {
+  background-color: #6200ea;
+}
+
+#build-render button.copy-html:hover {
+  background-color: #7c4dff;
+}
+
+#build-render button.view-xml {
+  background-color: #c51162;
+}
+
+#build-render button.view-xml:hover {
+  background-color: #ff4081;
+}
+
+#build-render span.toast--message {
+  margin-left: calc(0.5rem + 1vmin);
+  color: #00a99d;
+  font-weight: bold;
+  display: none;
+}
+
+#build-html-viewer {
+  margin-top: calc(0.5rem + 2vmin);
+  display: none;
+}
+
+#build-render textarea#hidden--output {
+  margin-top: calc(0.5rem + 1vmin);
+  width: calc(0.5rem + 50vmin);
+  height: calc(0.5rem + 10vmin);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
 }
 
 /* LINK CARDS */

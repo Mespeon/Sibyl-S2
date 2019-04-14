@@ -9,6 +9,7 @@
   <script src="/js/startForm.js"></script>
 
   <link rel="stylesheet" href="/css/builder.css">
+  <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'> -->
 </head>
 <body>
   <div id="wrapper">
@@ -27,7 +28,8 @@
       </div>
     </div>
     <div class="builder--subheader-container">
-      <span class="builder--subheader">Use this form builder to generate your own survey form.</span>
+      <span class="builder--subheader">Use this form builder to generate your own awesomeness form.</span>
+      <!-- <button id="getXML">Get Form XML</button> -->
     </div>
 
     <!-- The form builder and renderer itself -->
@@ -43,7 +45,17 @@
     </div>
     <div id="build-render">
       <form action="#"></form>
-      <button class="btn btn-default edit-form">Edit</button>
+      <button class="btn btn-default edit-form render-controls">Edit</button>
+      <button class="btn btn-default export-html render-controls">Export HTML</button>
+      <button class="btn btn-default copy-html render-controls">Copy HTML</button>
+      <button class="btn btn-default view-xml render-controls">View XML</button>
+      <span class="toast--message">Toast message goes here.</span>
+      <div id="build-html-viewer">
+        <h1 class="builder--header">Form HTML</h1>
+        <span class="builder--subheader">Copy and paste this to your favorite editor in order to further customize your form.</span>
+        <span class="builder--subheader">For intermediate to advanced users only.</span>
+        <textarea id="hidden--output" rows="10" cols="120"></textarea>
+      </div>
     </div>
 
     <!-- FOOTER -->
