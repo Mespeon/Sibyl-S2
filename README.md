@@ -14,10 +14,17 @@ The installation is successful if a Sibyl 0.3 extension is added to your install
 
 ## Features
 1. Form Builder powered by the jQuery Form Builder found here (https://formbuilder.online/)
+> Form builder now allows you to download, view, and copy the generated form's XML/HTML code.
 2. The Sibyl Endpoint, hosted at (https://pythonanywhere.com) | Repository (https://github.com/Mespeon/Sibyl-S2-Backend)
-3. User registry (register only; sign in pipelined for deployment)
-4. Lexicon Match sentiment analysis (dead simple; could use some improvement)
-5. Developer Options (open popup > Developer Options)
-6. Sentiment analysis tester (uses the Lexicon Match algorithm; Classifier algorithm pipelined for deployment)
+3. User registry
+>  register only; sign in pipelined for deployment
+4. Lexicon Match sentiment analysis
+>  dead simple; could use some improvement
+5. Naive Bayes classifier sentiment analysis
+> slightly more complicated than lexicon match; could also use some improvement
+6. Developer Options
+>  To access: open popup \> Developer Options
+7. Sentiment analysis tester
+> Choose between lexicon match or classifier; these algorithms are under development and may not always be accurate
 
 More coming soon!
