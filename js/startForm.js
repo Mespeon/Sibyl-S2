@@ -86,12 +86,25 @@ $(document).ready(function() {
       showToast('Copied to clipboard.');
     });
 
-    // Toggle action for View XML
-    $('.view-xml', $formContainer).click(function() {
+    // Toggle action for View JS
+    $('.view-js', $formContainer).click(function() {
       console.log(Date.now() / 1000 | 0);
 
-      xml = formBuilder.actions.getData('xml');
-      console.log(xml);
+      // Get the JS object of the form
+      js = formBuilder.actions.getData();
+
+      // Iterate on the JS object and output the field names
+      // For now, this will output only the names of fields (if available)
+      var counter;
+      console.log('Fields in form: ', js.length);
+      for (counter = 0; counter < js.length; counter++) {
+        if (js[counter].name) {
+          console.log(js[counter].name);
+        }
+        else {
+          console.log('This item has no name attribute.');
+        }
+      }
     });
 
     // // Toggle for getting the form data XML (for debugging)
