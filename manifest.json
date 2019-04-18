@@ -3,7 +3,7 @@
 
   "name": "Sibyl",
   "description": "A customizable survey form generator with sentiment analysis on respondent feedback.",
-  "version": "0.3",
+  "version": "1.0",
   "author": "Shaina Bautista, Ken Lingatong, Mark Nolledo",
   "minimum_chrome_version": "46",
 
@@ -23,19 +23,19 @@
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "/img/icons/sibyl-type2_16.png",
-      "32": "/img/icons/sibyl-type2_32.png",
-      "48": "/img/icons/sibyl-type2_48.png",
-      "128": "/img/icons/sibyl-type2_128.png"
+      "16": "/img/icons/sibyl-type3_16.png",
+      "32": "/img/icons/sibyl-type3_32.png",
+      "48": "/img/icons/sibyl-type3_48.png",
+      "128": "/img/icons/sibyl-type3_128.png"
     }
   },
 
   "options_page": "options.html",
 
   "icons": {
-    "16": "/img/icons/sibyl-type2_16.png",
-    "32": "/img/icons/sibyl-type2_32.png",
-    "48": "/img/icons/sibyl-type2_48.png",
-    "128": "/img/icons/sibyl-type2_128.png"
+    "16": "/img/icons/sibyl-type3_16.png",
+    "32": "/img/icons/sibyl-type3_32.png",
+    "48": "/img/icons/sibyl-type3_48.png",
+    "128": "/img/icons/sibyl-type3_128.png"
   }
 }

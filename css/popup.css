@@ -7,7 +7,7 @@ On hovers: #00cc73
 Generic text: #999 ~ #eee */
 
 body {
-  width: 400px;
+  width: 200px;
   height: 100%;
   margin: 0px;
   padding: 0px;
@@ -45,6 +45,14 @@ a:visited {
   padding-bottom: calc(0.5rem + 2vmin);
 }
 
+#footer a {
+  display: block;
+}
+
+#actions {
+  width: 100%;
+}
+
 .header h1, #actions h1  {
   color: #00a99d;
   font-size: calc(0.5rem + 6vmin);
@@ -65,6 +73,8 @@ a:visited {
 }
 
 .subtext {
+  display: block;
+  margin-top: 1vmin;
   font-size: calc(0.5rem + 2vmin);
   color: #999;
 }
@@ -165,10 +175,29 @@ a.material-icons {
   padding: 0.5rem;
 }
 
+.popup--btn {
+  width: 100%;
+  padding: calc(0.5rem + 2vmin);
+  margin-bottom: calc(0.5rem + 0.5vmin);
+  background-color: #00a99d;
+  border: 1px solid #00a99d;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.popup--btn:hover {
+  cursor: pointer;
+  background-color: #00cc73;
+  border: 1px solid #00cc73;
+}
+
 /* LINK CARDS */
 .cards {
-  margin-top: calc(0.5rem + 1vmin);
   display: inline-block;
+  width: 1vmin;
 }
 
 .cardholder {

@@ -1,6 +1,15 @@
 // Start form builder when page is ready
 $(document).ready(function() {
+  console.log('[Builder] Form builder is ready.');
   //$(document.getElementById('build-wrap')).formBuilder();   // Basic form with no functions
+  //$tableName = document.querySelector('#field--tableName');
+
+  // On page load, generate a form ID based on the date now.
+  // This will be used to identify the form that will come out (if exported),
+  // as a file name, and as the formID query variable.
+  $formName = document.querySelector('#tableName');
+  $formID = Date.now() / 1000 | 0;
+  $('#table-id-display').html($formID);
 
   // Form Builder with Form Render
   jQuery(function($) {
@@ -11,13 +20,19 @@ $(document).ready(function() {
       $formHTML = $(document.getElementById('build-html-viewer')),
       fbOptions = {
         onSave: function(formData) {
-          // The form builder's render view
-          $fbEditor.toggle();
-          $formContainer.toggle();
-          $formHeaders.toggle();
-          $('form', $formContainer).formRender({
-            formData: formBuilder.formData
-          });
+          if ($formName.value == '') {
+            showToast('Form name cannot be empty.');
+          }
+          else {
+            // The form builder's render view
+            $formName.disabled = true;  // disables the form name input to prevent edits
+            $fbEditor.toggle();
+            $formContainer.toggle();
+            $formHeaders.toggle();
+            $('form', $formContainer).formRender({
+              formData: formBuilder.formData
+            });
+          }
         },
 
         notify: {
@@ -32,10 +47,20 @@ $(document).ready(function() {
           }
         },
 
-        disabledAttrs: [
-          'access'
+        disableFields: [
+          'autocomplete',
+          'file',
+          'starRating'
         ],
 
+        disabledAttrs: [
+          'access',
+          'className',
+          'other',
+          'multiple'
+        ],
+
+        editOnAdd: true,
         fieldRemoveWarn: true,
         scrollToFieldOnAdd: true,
         stickyControls: {
@@ -49,8 +74,14 @@ $(document).ready(function() {
       },
       formBuilder = $fbEditor.formBuilder(fbOptions); // starts the form builder with the options stated above
 
+    // AJAX START listeners
+    $(document).ajaxStart(function() {
+      //showToast('Processing form. Please wait.');
+    });
+
     // Toggle action for the form builder's Render Preview
     $('.edit-form', $formContainer).click(function() {
+      $formName.disabled = false; // re-enables form name edits
       $fbEditor.toggle();
       $formContainer.toggle();
       $formHeaders.toggle();
@@ -60,13 +91,71 @@ $(document).ready(function() {
 
     // Toggle action for Export to HTML
     $('.export-html', $formContainer).click(function() {
+      $fields = [];   // the fields array
+      tableName = $formName.value;  // the table / form name
+      console.log('Initial fields: ', $fields);
+      console.log('Form ID: ', $formID);
+
+      // Get the form builder's data first
       html = $formContainer.formRender('html');
       xml = formBuilder.actions.getData('xml');
-      showToast('Exporting as HTML.');
+      js = formBuilder.actions.getData();
 
-      createForm(xml);
+      //showToast('Exporting as HTML.');
+      console.log(js);
 
-      //console.log(html);
+      // Iterate on the JS object and output the field names
+      // For now, this will output only the names of fields (if available)
+      if (js.length != 0) {
+        var counter;
+        console.log('Fields in form: ', js.length);
+        for (counter = 0; counter < js.length; counter++) {
+          $fieldName = js[counter].name;
+          $fieldType = js[counter].type;
+
+          // This condition checks for fields that are buttons.
+          // This will filter buttons added to the field array.
+          if ($fieldName && $fieldType != 'button') {
+            console.log(js[counter].name);
+            $fields.push(js[counter].name);
+            console.log('Pushed to array.');
+          }
+          else {
+            console.log($fieldName, 'not added. This item has no name attribute or is a button.');
+          }
+        }
+        console.log('Updated fields array: ', $fields);
+
+        // After appending the fields, stringify the array.
+        jFields = JSON.stringify($fields);
+
+        // Begin an AJAX request to server to push the table name and columns FIRST
+        // before exporting the actual HTML file. This is to prevent an HTML form
+        // from having no backend table linked to it.
+        if ($fields.length != 0) {
+          $.ajax({
+            type: 'POST',
+            url: 'https://marknolledo.pythonanywhere.com/sibyl/create',
+            data: {tableName: tableName, fields: jFields},
+            error: function(response) { console.log(response); },
+            success: function(response) {
+              console.log(response);
+              // Pass the form's XML data to the form HTML constructor
+              showToast('Creating HTML document.');
+              createForm(xml);
+            }
+          });
+          return false;
+        }
+        else {
+          console.log('Not submitted. There are no quantifiable items in the form.');
+          showToast('The form has no quantifiable fields.')
+        }
+      }
+      else {
+        console.log('Not submitted. There are no fields in the form.');
+        showToast('There are no fields in the form.');
+      }
     });
 
     // Toggle action for Copy HTML
@@ -115,11 +204,11 @@ $(document).ready(function() {
 
   // EXPORT AND COPY HANDLERS
   function showToast(text) {
-    $('.toast--message').html(text);
-    $('.toast--message').fadeToggle(300, function() {
+    $('#toast--message').html(text);
+    $('#toast--parent-container').fadeToggle(300, function() {
       setTimeout(function() {
-        $('.toast--message').fadeToggle(300);
-      }, 2000);
+        $('#toast--parent-container').fadeToggle(300);
+      }, 5000);
     });
   }
 
@@ -141,7 +230,9 @@ $(document).ready(function() {
     </head>
     <body class="container">
     <h1>Sample Form</h1><hr>
+    <form action="https://marknolledo.pythonanywhere.com/sibyl/test" method="POST">
     ${$renderContainer.html()}
+    </form>
     </body>
     </html>`;
     var formPreviewWindow = window.open('', 'formPreview', 'height=480,width=640,toolbar=no,scrollbars=yes');
@@ -156,7 +247,7 @@ $(document).ready(function() {
     console.log('Preview: \n' + html);
     console.log('To write: \n' + html_toWrite);
 
-    $filename = 'sibyl-forms' + (Date.now() / 1000 | 0);
+    $filename = $formName.value + '-' + $formID;
     writeForm($filename, html_toWrite);
   }
 

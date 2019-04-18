@@ -13,3 +13,21 @@ chrome.runtime.onInstalled.addListener(function() {
       actions: [new chrome.declarativeContent.ShowPageAction()]
   }]);
 });
+
+// Open the options page
+document.querySelector('#link--options-page').addEventListener('click', function() {
+  if (chrome.runtime.openOptionsPage) {
+    chrome.runtime.openOptionsPage();
+  }
+  else {
+    window.open(chrome.runtime.getURL('options.html'));
+  }
+});
+
+document.querySelector('#open--analysis').addEventListener('click', function() {
+  window.open(chrome.runtime.getURL('analysis.html'));
+});
+
+document.querySelector('#open--formbuilder').addEventListener('click', function() {
+  window.open(chrome.runtime.getURL('builder.html'));
+});

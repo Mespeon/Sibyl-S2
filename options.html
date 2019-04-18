@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Sibyl - Developer Options</title>
+  <title>Developer Options - Sibyl</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -27,7 +27,7 @@
             <h1 class="content--option-header">Lexicon Matching</h1>
             <form action="http://marknolledo.pythonanywhere.com/sibyl/analyze/mode=lexicon" method="POST" id="form-analyze-single" name="form-analyze-single" class="dev-form">
               <label>Enter text</label><br/>
-              <textarea id="comment" name="comment" form="form-analyze-single" maxlength="100" cols="55" rows="10"></textarea><br/>
+              <textarea id="comment" name="comment" form="form-analyze-single" class="text--multiline" maxlength="100"></textarea><br/>
               <input type="submit" id="submit--analyze-single" name="submit--analyze-single" class="submit-button" value="Submit for Lexicon Matching">
             </form>
 
@@ -41,7 +41,7 @@
             <h1 class="content--option-header">Naive Bayes Classifier</h1>
             <form action="http://marknolledo.pythonanywhere.com/sibyl/analyze/mode=classifier" method="POST" id="form-classify-single" name="form-classify-single" class="dev-form">
               <label>Enter text</label><br/>
-              <textarea id="classify-comment" name="classify-comment" form="form-classify-single" maxlength="100" cols="55" rows="10"></textarea><br/>
+              <textarea id="classify-comment" name="classify-comment" class="text--multiline" form="form-classify-single" maxlength="100"></textarea><br/>
               <input type="submit" id="submit--classify-single" name="submit--classify-single" class="submit-button" value="Submit for Classifier Analysis">
             </form>
 

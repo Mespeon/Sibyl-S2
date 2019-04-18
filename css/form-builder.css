@@ -498,7 +498,6 @@
 .form-wrap.form-builder .form-actions {
   float: right;
   margin-top: 5px;
-  box-shadow: 0 0px 5px rgba(100,100,100,0.20), 0 0px 5px rgba(100,100,100,0.20);
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
 }

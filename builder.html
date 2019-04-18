@@ -16,17 +16,8 @@
     <!-- HEADERS -->
     <div id="headers--container" class="flexbox">
       <h1 class="builder--header">Form Builder</h1>
-      <!-- How to Use Button -->
-      <div class="cards user-guide--button">
-        <div class="cardholder">
-          <a href="#" rel="noopener" class="card">
-            <div class="card-container">
-              <div class="card-title">How to Use</div>
-            </div>
-          </a>
-        </div>
-      </div>
     </div>
+
     <div class="builder--subheader-container">
       <span class="builder--subheader">Use this form builder to generate your own awesomeness form.</span>
       <!-- <button id="getXML">Get Form XML</button> -->
@@ -34,6 +25,14 @@
 
     <!-- The form builder and renderer itself -->
     <!-- DO NOT TOUCH OR EDIT ANYTHING WITHIN. -->
+    <div id="build-details">
+      <h2 class="builder--header">Form Name</h2>
+      <span class="builder--subheader">Give this form a unique name that reflects what it will be used for. Need inspiration? How about renai-circulation?</span>
+      <input type="text" id="tableName" name="tableName" maxlength="50">
+      <span class="builder--subheader">This form will be created with this form ID: </span><span id="table-id-display" class="builder--subheader table-id"></span>
+    </div>
+
+    <!-- MAINTAINED BY THE FORM BUILDER LIBRARY -->
     <div id="build-wrap"></div>
     <div id="build-render-headers">
       <div class="flexbox">
@@ -49,7 +48,7 @@
       <button class="btn btn-default export-html render-controls">Export HTML</button>
       <button class="btn btn-default copy-html render-controls">Copy HTML</button>
       <button class="btn btn-default view-js render-controls">View JS Object</button>
-      <span class="toast--message">Toast message goes here.</span>
+      <!-- <span class="toast--message">Toast message goes here.</span> -->
       <div id="build-html-viewer">
         <h1 class="builder--header">Form HTML</h1>
         <span class="builder--subheader">Copy and paste this to your favorite editor in order to further customize your form.</span>
@@ -66,6 +65,14 @@
         jQuery Form Builder (<a href="https://github.com/kevinchappell/formBuilder" rel="noopener" target="_blank">GitHub</a>)
       </span>
     </div>
+
+    <!-- TOAST MESSAGE -->
+    <div id="toast--parent-container">
+      <div id="toast--inner-container">
+        <span id="toast--message"></span>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
