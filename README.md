@@ -10,7 +10,7 @@
 5. Enable Developer mode in Extensions.
 6. Click on Load unpacked then navigate to the folder where the extension files are extracted.
 
-The installation is successful if a Sibyl 0.3 extension is added to your installed extensions grid.
+The installation is successful if a Sibyl 1.0 extension is added to your installed extensions grid.
 
 ## Features
 1. Form Builder powered by the jQuery Form Builder found here (https://formbuilder.online/)
@@ -26,5 +26,7 @@ The installation is successful if a Sibyl 0.3 extension is added to your install
 >  To access: open popup \> Developer Options
 7. Sentiment analysis tester
 > Choose between lexicon match or classifier; these algorithms are under development and may not always be accurate
+8. Sibyl Analysis Dashboard
+> Includes the aggregated data sentiment analysis trigger
 
 More coming soon!
