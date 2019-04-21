@@ -1,6 +1,10 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Sibyl Form Builder - Powered by jQuery Form Builder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <!-- SCRIPTS FOR THE FORM BUILDER -->
   <script src="/js/jquery.min.js"></script>
   <script src="/js/jquery-ui.min.js"></script>
@@ -44,16 +48,19 @@
     </div>
     <div id="build-render">
       <form action="#"></form>
-      <button class="btn btn-default edit-form render-controls">Edit</button>
-      <button class="btn btn-default export-html render-controls">Export HTML</button>
-      <button class="btn btn-default copy-html render-controls">Copy HTML</button>
-      <button class="btn btn-default view-js render-controls">View JS Object</button>
-      <!-- <span class="toast--message">Toast message goes here.</span> -->
-      <div id="build-html-viewer">
-        <h1 class="builder--header">Form HTML</h1>
-        <span class="builder--subheader">Copy and paste this to your favorite editor in order to further customize your form.</span>
-        <span class="builder--subheader">For intermediate to advanced users only.</span>
-        <textarea id="hidden--output" rows="10" cols="120"></textarea>
+      <div id="build-controls-container">
+        <button class="btn btn-default edit-form render-controls">Edit Form</button>
+        <div id="build-controls-header"><span class="builder--subheader">If you're satisfied, choose an action below.</span></div>
+        <button class="btn btn-default export-html render-controls">Export for Live Use</button>
+        <button class="btn btn-default export-html-only render-controls">Export HTML file only</button>
+        <button class="btn btn-default copy-html render-controls">Copy HTML</button>
+        <!-- <span class="toast--message">Toast message goes here.</span> -->
+        <div id="build-html-viewer">
+          <h1 class="builder--header">Form HTML</h1>
+          <span class="builder--subheader">Copy and paste this to your favorite editor in order to further customize your form.</span>
+          <span class="builder--subheader">For intermediate to advanced users only.</span>
+          <textarea id="hidden--output" rows="10" cols="120"></textarea>
+        </div>
       </div>
     </div>
 
@@ -73,6 +80,8 @@
       </div>
     </div>
 
+    <!-- PAGE BACKGROUND -->
+    <div id="page--splitter-background"></div>
   </div>
 </body>
 </html>

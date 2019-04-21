@@ -14,7 +14,6 @@ body {
   padding: 0px;
   font-family: sans-serif;
   color: #444;
-  background-color: #efefef;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -30,13 +29,24 @@ a {
 #wrapper {
   width: calc(0.5rem + 60%);
   margin: auto;
-  margin-top: calc(0.5rem + 5vh);
+  margin-top: calc(0.5rem + 4vh);
   margin-bottom: calc(0.5rem + 5vh);
   background-color: #fff;
   padding: calc(0.5rem + 2vmin);
-  border: 1px solid #eee;
+  border: 1px solid #fff;
   border-radius: 5px;
-  box-shadow: 0 0px 10px rgba(100,100,100,0.10), 0 0px 10px rgba(100,100,100,0.10);
+}
+
+#page--splitter-background {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  z-index: -1;
+  background-color: #00a99d;
 }
 
 #build-wrap, #build-render {
@@ -111,7 +121,6 @@ a {
   font-size: calc(0.5rem + 1vmin);
   padding: calc(0.5rem + 2vmin);
   color: #eee;
-  box-shadow: 0 0 15px 5px rgba(0,0,0,0.2);
 }
 
 /* Form Builder wrapper */
@@ -121,7 +130,18 @@ a {
 
 #build-render, #build-render-headers {
   display: none;
-  margin-bottom: calc(0.5rem + 2vmin);
+  margin-bottom: calc(0.5rem + 0.5vmin);
+}
+
+#build-controls-container {
+  border-top: 1px solid #ccc;
+  padding-top: calc(0.5rem + 0.5vmin);
+  margin-top: calc(0.5rem + 1vmin);
+}
+
+#build-controls-header {
+  margin-top: calc(0.5rem + 0.5vmin);
+  margin-bottom: calc(0.5rem + 0.5vmin);
 }
 
 #build-render button.render-controls {
@@ -158,11 +178,11 @@ a {
   background-color: #7c4dff;
 }
 
-#build-render button.view-xml {
+#build-render button.export-html-only {
   background-color: #c51162;
 }
 
-#build-render button.view-xml:hover {
+#build-render button.export-html-only:hover {
   background-color: #ff4081;
 }
 

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Dashboard - Sibyl</title>
+  <title>Analysis Dashboard - Sibyl</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="/css/analysis.css">
@@ -9,13 +11,109 @@
 </head>
 <body>
   <div id="wrapper">
-    <h1>Form Analysis</h1>
-    
-    <!-- HIDDEN DIVS -->
-    <div id="form-analysis-parent-container">HELLO THERE, OBI-WAN.</div>
+    <div id="wrapper--child-container">
+      <div id="analysis--header-container">
+        <h1>Sibyl Analysis</h1>
+        <div class="notice-group">
+          <span class="heavy">Hey, there!</span>
+          <span class="regular">We know you're excited, but in order for us to analyze a form, it should come from us.</span>
+          <span class="regular">If you haven't yet, create a form using our builder first.</span>
+          <button id="open--formBuilder" class="analysis--buttons-normal">Open Form Builder</button>
+        </div>
+      </div>
+      <div id="analysis--prepend">
+        <h2>Form Finder</h2>
+        <form id="form-findFormId" name="form-findFormId" action="https://marknolledo.pythonanywhere.com/sibyl/prepare" method="POST">
+          <input type="text" id="text--formId" name="text--formId" required>
+          <input type="submit" id="submit--findFormId" name="submit--findFormId" value="Search" class="analysis--buttons-normal">
+        </form>
+        <div class="notice-group">
+          <span class="regular">Forgot your ID? Try looking for the HTML file the form builder made for you before; the number is the form ID.</span>
+        </div>
+      </div>
+
+      <!-- HIDDEN DIVS -->
+      <div id="form-analysis-parent-container">
+        <div id="analysis--append">
+          <h2>Form Statistics</h2>
+          <!-- STATISTICS HEADER -->
+          <div id="analysis--stat-header-container">
+            <table id="analysis--stat-header-basics">
+              <tr id="statistics--table-headers">
+                <td>Form ID</td>
+                <td>Response Count</td>
+                <td>Column Count</td>
+              </tr>
+
+              <tr id="statistics--value-containers">
+                <td id="statistics--table-id">0</td>
+                <td id="statistics--response-counter">0</td>
+                <td id="statistics--column-counter">0</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- RECENT COMMENTS -->
+          <div id="analysis--recent-entries-container">
+            <div id="recent-entries--header">
+              <h2>Recent Entries</h2>
+              <select id="recent-entries--data-switch" name="recent-entries--data-switch"></select>
+            </div>
+            <table id="analysis--recent-entries"></table>
+            <div id="recent-entries--classifier-parent-container">
+              <h2>Sentiment Classifier</h2>
+              <div class="warn-set">
+                <span>While this sounds awesome, make sure that the chosen entry set could possibly be analyzed for sentiment, or this will return a really irregular result. You have been warned.</span>
+              </div>
+              <button id="classifier-trigger">Perform Sentiment Analysis on Current Entries</button>
+              <table id="classifier--results-container">
+                <tr class="classifier--results-headers">
+                  <td>Classification</td>
+                  <td colspan='2'>Polarity</td>
+                </tr>
+
+                <tr>
+                  <td id="classifier--classification">??</td>
+                  <td colspan='2'><span id="positive">??</span><span id="negative">??</span></td>
+                </tr>
+
+                <tr class="classifier--results-headers">
+                  <td>Entries Classified</td>
+                  <td>Positives</td>
+                  <td>Negatives</td>
+                </tr>
+
+                <tr id="classifier--statistics-container">
+                  <td id="classifier--entry-count">0</td>
+                  <td id="classifier--pos-count">0</td>
+                  <td id="classifier--neg-count">0</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- ASYNC SNACKBAR -->
+  <div id="async" class="snackbar-normal">
+    <div id="async--child-container">
+      <span id="async-message" class="snackbar--message">Process is running. Please wait.</span>
+    </div>
+  </div>
+
+  <!-- NOTIF SNACKBAR -->
+  <div id="notification" class="snackbar-normal">
+    <div id="notif--child-container">
+      <span id="notif-message" class="snackbar--message">??</span>
+    </div>
+  </div>
+
+  <!-- PAGE BACKGROUND -->
+  <div id="page--splitter-background"></div>
+
   <!-- ONBOARD SCRIPTS -->
-  <script src="/js/behaviors.js"></script>
+  <script src="/js/behaviors.js" defer></script>
 </body>
 </html>

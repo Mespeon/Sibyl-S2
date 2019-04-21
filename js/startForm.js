@@ -57,8 +57,14 @@ $(document).ready(function() {
           'access',
           'className',
           'other',
-          'multiple'
+          'multiple',
+          'toggle'
         ],
+
+        disabledSubtypes: {
+          button: ['button'],
+          paragraph: ['canvas']
+        },
 
         editOnAdd: true,
         fieldRemoveWarn: true,
@@ -76,7 +82,9 @@ $(document).ready(function() {
 
     // AJAX START listeners
     $(document).ajaxStart(function() {
-      //showToast('Processing form. Please wait.');
+      showToast('Processing form. Please wait.');
+    }).ajaxStop(function() {
+      $('#toast--parent-container').fadeToggle(300);
     });
 
     // Toggle action for the form builder's Render Preview
@@ -92,7 +100,8 @@ $(document).ready(function() {
     // Toggle action for Export to HTML
     $('.export-html', $formContainer).click(function() {
       $fields = [];   // the fields array
-      tableName = $formName.value;  // the table / form name
+      //tableName = $formName.value;  // the table / form name
+      tableName = $formID;
       console.log('Initial fields: ', $fields);
       console.log('Form ID: ', $formID);
 
@@ -176,11 +185,12 @@ $(document).ready(function() {
     });
 
     // Toggle action for View JS
-    $('.view-js', $formContainer).click(function() {
+    $('.export-html-only', $formContainer).click(function() {
       console.log(Date.now() / 1000 | 0);
 
       // Get the JS object of the form
       js = formBuilder.actions.getData();
+      xml = formBuilder.actions.getData('xml');
 
       // Iterate on the JS object and output the field names
       // For now, this will output only the names of fields (if available)
@@ -194,6 +204,9 @@ $(document).ready(function() {
           console.log('This item has no name attribute.');
         }
       }
+
+      showToast('Creating HTML document.');
+      createForm(xml);
     });
 
     // // Toggle for getting the form data XML (for debugging)
@@ -221,19 +234,179 @@ $(document).ready(function() {
     };
     let $renderContainer = $('<form/>');
     $renderContainer.formRender(formRenderOpts);
+    let formId = $formID;
     let html = `<!DOCTYPE html><head><title>Sibyl Forms</title></head><body class="container"><h1>Preview</h1><hr>${$renderContainer.html()}</body></html>`;
     let html_toWrite = `
     <!DOCTYPE html>
+    <html lang="en">
     <head>
-    <title>Sibyl Forms</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'>
+      <title>Sibyl Forms</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+      <!-- SCRIPTS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+      <!-- STYLE -->
+      <style>
+        body {
+          width: 100%;
+          margin: 0px;
+          padding: 0px;
+          font-family: Roboto, sans-serif;
+          color: #444;
+        }
+
+        #wrapper {
+          width: calc(0.5rem + 60%);
+          margin: auto;
+          margin-top: calc(0.5rem + 4vh);
+          margin-bottom: calc(0.5rem + 2vh);
+          background-color: #fff;
+          padding: calc(0.5rem + 2vmin);
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        #page--splitter-background {
+          position: fixed;
+          top: 0px;
+          right: 0px;
+          width: 100%;
+          height: calc(0.5rem + 30vh);
+          padding: 0px;
+          margin: 0px;
+          z-index: -1;
+          background-color: #00a99d;
+        }
+
+        #footer {
+          width: calc(0.5rem + 60%);
+          margin: auto;
+          margin-bottom: calc(0.5rem + 2vh);
+        }
+
+        #footer span {
+          display: block;
+        }
+
+        span.heavy {
+          font-weight: bold;
+        }
+
+        /* FORM CONTROLS */
+        h1, h2, h3, h4, h5, h6 {
+          color: #00a99d;
+          font-weight: bold;
+        }
+
+        p, blockquote, address, output {
+          color: #777;
+        }
+
+        address {
+          font-style: italic;
+        }
+
+        blockquote {
+          color: #555;
+        }
+
+        label {
+          font-size: calc(0.5rem + 1vmin);
+          color: #555;
+        }
+
+        .fb-checkbox-group, .fb-radio-group {
+          width: calc(0.5rem + 50%);
+          border-left: 2px solid #ccc;
+          padding: calc(0.5rem + 1vmin);
+        }
+
+        .checkbox-group label, .radio-group label {
+          color: #666;
+        }
+
+        .fb-radio-inline, .fb-checkbox-inline {
+          display: inline;
+          margin-right: 1vmin;
+        }
+
+        .fb-number {
+          width: calc(0.5rem + 20%);
+        }
+
+        .fb-text, .fb-textarea, .fb-select, .fb-date {
+          width: calc(0.5rem + 60%);
+        }
+
+        .tooltip-element {
+          padding: calc(0.5rem + 0.1vmin);
+          font-size: calc(0.5rem + 0.5vmin);
+          background-color: #00a99d;
+          border-radius: 25px;
+          color: #fff;
+          display: none;
+        }
+
+        .fb-required {
+          color: #ff0000;
+        }
+      </style>
     </head>
     <body class="container">
-    <h1>Sample Form</h1><hr>
-    <form action="https://marknolledo.pythonanywhere.com/sibyl/test" method="POST">
-    ${$renderContainer.html()}
-    </form>
-    </body>
+      <div id="wrapper">
+        <form action="https://marknolledo.pythonanywhere.com/sibyl/write" method="POST" id="generatedForm" name="generatedForm">
+          <input type="hidden" id="tableId" name="tableId" value="${formId}">
+          ${$renderContainer.html()}
+        </form>
+      </div>
+      <div id="footer">
+        <span class="subtexts heavy">This form is created using Sibyl.</span>
+        <span class="subtexts micro">&copy; 2019 Team Sibyl S2</span>
+      </div>
+      <!-- PAGE BACKGROUND -->
+      <div id="page--splitter-background"></div>
+
+      <script>
+        $('#generatedForm').submit(function() {
+          form = $(this);
+          $formData = new FormData(document.querySelector('#generatedForm'));
+          $formId = document.querySelector('#tableId');
+          $formValues = [];
+
+          // PUSH ALL VALUES TO AN ARRAY
+          for (var pair of $formData.entries()) {
+            $formValues.push(pair[1]);
+          }
+
+          // For debugging LULZ
+          console.log($formId.value);
+          console.log('Updated form values: ', $formValues);
+
+          $.ajax({
+              type: 'POST',
+              url: 'http://marknolledo.pythonanywhere.com/sibyl/write',
+              data: {tableName: $formId.value, formData: JSON.stringify($formValues)},
+              error: function()
+              {
+                 alert("Request Failed");
+              },
+              success: function(response)
+              {
+                 //alert('Request Sent');
+                 console.log(response);
+                 window.location.replace('https://marknolledo.pythonanywhere.com/sibyl/thanks');
+              }
+          });
+          return false;
+        });
+      </script>
+      </body>
     </html>`;
     var formPreviewWindow = window.open('', 'formPreview', 'height=480,width=640,toolbar=no,scrollbars=yes');
     formPreviewWindow.document.write(html);
