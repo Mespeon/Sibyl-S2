@@ -1,6 +1,7 @@
 # Sibyl-S2
 #### A customizable survey form generator with sentiment analysis on respondent feedback. A thesis work in progress.
 ##### This repository is for the Chrome extension only.
+##### This thesis is now almost complete, but it will be continuously updated in the future.
 ## Testing and Installation
 #### Compatible with Google Chrome only! Cross-compatibility is in the works, though.
 1. Clone or download this repository. It will be downloaded as a ZIP file.
@@ -28,5 +29,3 @@ The installation is successful if a Sibyl 1.0 extension is added to your install
 > Choose between lexicon match or classifier; these algorithms are under development and may not always be accurate
 8. Sibyl Analysis Dashboard
 > Includes the aggregated data sentiment analysis trigger
-
-More coming soon!
