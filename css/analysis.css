@@ -161,7 +161,7 @@ span.regular {
   margin-top: calc(0.5rem + 1vmin);
 }
 
-#recent-entries--data-switch {
+#recent-entries--data-switch, #recent-entries--count-switch {
   font-size: calc(0.5rem + 1vmin);
   padding: calc(0.5rem + 0.1vmin);
   transition-duration: 0.5s;
@@ -170,8 +170,16 @@ span.regular {
   margin-top: calc(0.5rem + 1vmin);
 }
 
-#recent-entries--data-switch:hover {
+#recent-entries--data-switch:hover, #recent-entries--count-switch:hover {
   border: 1px solid #00a99d;;
+}
+
+.label {
+  font-size: calc(0.5rem + 1vmin);
+}
+
+.subheader {
+  font-size: calc(0.5rem + 1.2vmin);
 }
 
 #analysis--recent-entries {
@@ -182,8 +190,27 @@ span.regular {
 
 #recent-entries--header {
   font-size: calc(0.5rem + 1.5vmin);
-  padding-bottom: calc(0.5rem + 1vmin);
+  padding-bottom: calc(0.5rem + 2vmin);
   margin-top: calc(0.5rem + 2vmin);
+  border-bottom: 1px solid #ccc;
+}
+
+#recents--full-container {
+  margin-top: 2vh;
+}
+
+#recents--filtered-container {
+  max-height: calc(0.5rem + 40vh);
+}
+
+.analysis--recent-entries-full {
+  width: 100%;
+}
+
+.table-group {
+  margin-bottom: 8vh;
+  max-height: calc(0.5rem + 25vh);
+  overflow: auto;
 }
 
 .recent-entries--data-odd {

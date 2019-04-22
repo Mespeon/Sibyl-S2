@@ -37,6 +37,8 @@ $(document).ready(function() {
 // ACTION ON FORM FINDER SUBMISSION
 $('#form-findFormId').submit(function() {
   form = $(this);
+  $columnSwitch = document.querySelector('#recent-entries--data-switch');
+  $countSwitch = document.querySelector('#recent-entries--count-switch');
 
   $('#form-analysis-parent-container').slideUp(300);
 
@@ -51,8 +53,6 @@ $('#form-findFormId').submit(function() {
       },
       success: function(response)
       {
-         console.log(response);
-
          // Dump the full response in the variable.
          // This will enable on-the-fly UI modifications and updates
          // without sending another request to the server, unless necessary.
@@ -66,31 +66,105 @@ $('#form-findFormId').submit(function() {
 
          // Iterate through the JSON result and append them into
          // the table. These will be programatically created.
-         $('#analysis--recent-entries').html(''); // This will clear any previously appended child elements.
-         $table = document.querySelector('#analysis--recent-entries');  // The table to be appended to.
+         $('#analysis--recent-entries').html(''); // This will clear any previously appended child elements FOR THE FILTERED VIEW.
+         $('#recents--assist-container').html('') // This will clear any previously appended child elements FOR THE FULL VIEW.
 
-         var i, v;
-         for (i = 0; i < response.rowsCount; i++) {
-           // For the debugging LULZ
-           console.log(response.rows[i][1]);
-           console.log(response.rows[i][2]);
+         // The table/divs to be appended to.
+         $div = document.querySelector('#recents--assist-container');
+         $table = document.querySelector('#analysis--recent-entries');
 
-           // Create the rows and columns (MIGHT CHANGE TO STYLIZED DIVS)
-           // Then assign them their values and CSS classes, if ever.
-           var $tr = document.createElement('tr');
-           $tr.className = 'recent-entries--row';
+         if (response.rowsCount == 0) {
+           var $notice = document.createElement('h2');
+           $notice.textContent = 'No responses to show.';
+           $div.append($notice);
+           $columnSwitch.disabled = true;
+           $countSwitch.disabled = true;
+         }
+         else {
+           // If the page is not reloaded prior to update, re-enable the select fields.
+           $columnSwitch.disabled = false;
+           $countSwitch.disabled = false;
 
-           var $td_value = document.createElement('td');
-           if (i % 2 == 0) {
-             $td_value.className = 'recent-entries--data-even';
+           // In case of a column change without reloading, show the full view table
+           // then hide the filtered view table and the sentiment classifier div.
+           $('#recents--full-container').show();
+           $('#analysis--recent-entries').hide();
+           $('#recent-entries--classifier-parent-container').hide();
+
+           // PREPEND FULL VIEW TO THEIR TABLES
+           var row, col;
+           // Create the div, h2, and table
+           for (col = 0; col < response.colsCount; col++) {
+             // Child div
+             var $childDiv = document.createElement('div');
+             $childDiv.className = 'table-group';
+
+             // H2 heading
+             var $subhead = document.createElement('h2');
+             $subhead.className = 'subheader';
+             $subhead.textContent = response.cols[col];
+             $childDiv.append($subhead);
+
+             // Table
+             var $childTable = document.createElement('table');
+             $childTable.className = 'analysis--recent-entries-full';
+
+             // Append the rows to the table
+             for (row = 0; row < response.rowsCount; row++) {
+               var $trFull = document.createElement('tr');
+
+               var $tdRowId = document.createElement('td');
+               if (col != 0) {
+                 var $tdValue = document.createElement('td');
+               }
+
+               if (row % 2 == 0) {
+                 $tdRowId.className = 'recent-entries--data-even';
+                 if ($tdValue) $tdValue.className = 'recent-entries--data-even';
+               }
+               else {
+                 $tdRowId.className = 'recent-entries--data-odd';
+                 if ($tdValue) $tdValue.className = 'recent-entries--data-odd';
+               }
+
+               if (col != 0) {
+                 $tdRowId.textContent = response.rows[row][0];
+                 $tdValue.textContent = response.rows[row][col];
+               }
+               else {
+                 $tdRowId.textContent = response.rows[row][col];
+               }
+
+               $trFull.append($tdRowId);
+               if ($tdValue) $trFull.append($tdValue);
+               $childTable.append($trFull);
+             }
+             $childDiv.append($childTable);
+
+             // Append all to immediate parent
+             $div.append($childDiv);
+
+             // PREPEND FILTERED VIEW TO FILTER TABLES
+             var i, v;
+             for (i = 0; i < response.rowsCount; i++) {
+               // Create the rows and columns (MIGHT CHANGE TO STYLIZED DIVS)
+               // Then assign them their values and CSS classes, if ever.
+               var $tr = document.createElement('tr');
+               $tr.className = 'recent-entries--row';
+
+               var $td_value = document.createElement('td');
+               if (i % 2 == 0) {
+                 $td_value.className = 'recent-entries--data-even';
+               }
+               else {
+                 $td_value.className = 'recent-entries--data-odd';
+               }
+               $td_value.textContent = response.rows[i][0];
+               $tr.append($td_value);
+
+               $table.append($tr);  // Append to level 1 parent
+             }
            }
-           else {
-             $td_value.className = 'recent-entries--data-odd';
-           }
-           $td_value.textContent = response.rows[i][0];
-           $tr.append($td_value);
-
-           $table.append($tr);  // Append to level 1 parent
          }
 
          // Append the table column names as options in a select tag.
@@ -100,9 +174,7 @@ $('#form-findFormId').submit(function() {
 
          // Iterate through the returned response cols values
          var v;
-         for (v = 0; v < response.colsCount; v++) {
-           console.log(response.cols[v]);
-
+         for (v = 1; v < response.colsCount; v++) {
            var $option = document.createElement('option');
            $option.textContent = response.cols[v];
            $option.value = v;
@@ -113,6 +185,18 @@ $('#form-findFormId').submit(function() {
 
          // Show the table after appending everything
          $('#form-analysis-parent-container').slideToggle(300);
+
+         // In case that there are only two columns available (rowId and col_name),
+         // i.e. no change in category possible since the row ID is no longer included
+         // in the iteration, show the sentiment classifier div.
+         if (response.colsCount == 2) {
+           $('#recent-entries--classifier-parent-container').show();
+           $currentEntrySet = 1;
+         }
+         else {
+           $('#recent-entries--classifier-parent-container').hide();
+           $currentEntrySet = 0;
+         }
       }
   });
   return false;
@@ -141,7 +225,11 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
   var select = document.querySelector('#recent-entries--data-switch');
   var value = select.options[select.selectedIndex].value;
   $currentEntrySet = value;
-  console.log(value);
+  console.log($currentEntrySet);
+
+  if ($currentEntrySet !== '') {
+    $('#recents--full-container').fadeOut(300);
+  }
 
   $('#classifier--results-container').fadeOut(300);
   $('#analysis--recent-entries').fadeOut(300, function() {
@@ -149,14 +237,13 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
     // Iterate through the JSON result and append them into
     // the table. These will be programatically created.
     $('#analysis--recent-entries').html(''); // This will clear any previously appended child elements.
-    $table = document.querySelector('#analysis--recent-entries');  // The table to be appended to.
 
+    // The table/divs to be appended to.
+    $table = document.querySelector('#analysis--recent-entries');
+
+    // PREPEND FILTERED VIEW TO THEIR TABLES
     var i;
-    for (i = 0; i < $response.rowsCount; i++) {
-      // For the debugging LULZ
-      console.log($response.rows[i][1]);
-      console.log($response.rows[i][2]);
-
+    for (i = 1; i < $response.rowsCount; i++) {
       // Create the rows and columns (MIGHT CHANGE TO STYLIZED DIVS)
       // Then assign them their values and CSS classes, if ever.
       var $tr = document.createElement('tr');
@@ -184,6 +271,11 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
       $('#recent-entries--classifier-parent-container').fadeIn(300);
     }
   });
+});
+
+// View count switch
+document.querySelector('#recent-entries--count-switch').addEventListener('change', function() {
+  console.log('HELLO');
 });
 
 // Classify trigger

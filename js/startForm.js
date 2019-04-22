@@ -390,7 +390,7 @@ $(document).ready(function() {
 
           $.ajax({
               type: 'POST',
-              url: 'http://marknolledo.pythonanywhere.com/sibyl/write',
+              url: 'https://marknolledo.pythonanywhere.com/sibyl/write',
               data: {tableName: $formId.value, formData: JSON.stringify($formValues)},
               error: function()
               {
