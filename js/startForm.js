@@ -50,7 +50,8 @@ $(document).ready(function() {
         disableFields: [
           'autocomplete',
           'file',
-          'starRating'
+          'starRating',
+          'checkbox-group'
         ],
 
         disabledAttrs: [
