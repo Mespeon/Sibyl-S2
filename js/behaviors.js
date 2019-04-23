@@ -197,6 +197,39 @@ $('#form-findFormId').submit(function() {
            $('#recent-entries--classifier-parent-container').hide();
            $currentEntrySet = 0;
          }
+
+         // Append the corresponding number of possible view limit counts depending
+         // on number of rows returned. Remove the options if they are less than the limits.
+         $counterSwitch = document.querySelector('#recent-entries--count-switch');
+         $('#recent-entries--count-switch').html('');
+
+         // Create the ALL limit option always.
+         $allSwitch = document.createElement('option');
+         $allSwitch.textContent = 'All';
+         $allSwitch.value = 'all';
+         $counterSwitch.append($allSwitch);
+
+         // Then append the following numbered limits when row counts exceed specific counts.
+         if (response.rowsCount > 10) {
+           $count10 = document.createElement('option');
+           $count10.textContent = '10';
+           $count10.value = '10';
+           $countSwitch.append($count10);
+         }
+
+         if (response.rowsCount > 50) {
+           $count50 = document.createElement('option');
+           $count50.textContent = '50';
+           $count50.value = '50';
+           $countSwitch.append($count50);
+         }
+
+         if (response.rowsCount > 100) {
+           $count100 = document.createElement('option');
+           $count100.textContent = '100';
+           $count100.value = '100';
+           $countSwitch.append($count100);
+         }
       }
   });
   return false;
