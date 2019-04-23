@@ -29,3 +29,9 @@ The installation is successful if a Sibyl 1.0 extension is added to your install
 > Choose between lexicon match or classifier; these algorithms are under development and may not always be accurate
 8. Sibyl Analysis Dashboard
 > Includes the aggregated data sentiment analysis trigger
+9. Export for Live Use
+> Generation of table for form, upload HTML file to webhost
+10. Export for Local Use
+> Generation of fully usable and editable HTML file, for further testing or just for form creation purposes only
+11. Straight Upload
+> Uploads files to a server (HTML files only!)
