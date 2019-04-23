@@ -58,12 +58,14 @@ $(document).ready(function() {
           'className',
           'other',
           'multiple',
-          'toggle'
+          'toggle',
+          'placeholder'
         ],
 
         disabledSubtypes: {
           button: ['button'],
-          paragraph: ['canvas']
+          paragraph: ['canvas'],
+          textarea: ['tinymce', 'quill']
         },
 
         editOnAdd: true,
@@ -84,7 +86,7 @@ $(document).ready(function() {
     $(document).ajaxStart(function() {
       showToast('Processing form. Please wait.');
     }).ajaxStop(function() {
-      $('#toast--parent-container').fadeToggle(300);
+      $('#toast--parent-container').fadeOut(300);
     });
 
     // Toggle action for the form builder's Render Preview
@@ -235,17 +237,19 @@ $(document).ready(function() {
     let $renderContainer = $('<form/>');
     $renderContainer.formRender(formRenderOpts);
     let formId = $formID;
+    let formName = $formName.value;
     let html = `<!DOCTYPE html><head><title>Sibyl Forms</title></head><body class="container"><h1>Preview</h1><hr>${$renderContainer.html()}</body></html>`;
     let html_toWrite = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
-      <title>Sibyl Forms</title>
+      <title>${formName} - Sibyl Forms</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'>
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+      <link rel="shortcut icon" type="image/png" href="https://sibylforms.000webhostapp.com/sibyl-type3_16.png"/>
 
       <!-- SCRIPTS -->
       <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -356,6 +360,18 @@ $(document).ready(function() {
         .fb-required {
           color: #ff0000;
         }
+
+        #scrim {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          opacity: 0.8;
+          z-index: 17;
+          display: none;
+        }
       </style>
     </head>
     <body class="container">
@@ -372,7 +388,14 @@ $(document).ready(function() {
       <!-- PAGE BACKGROUND -->
       <div id="page--splitter-background"></div>
 
+      <!-- SCRIM -->
+      <div id="scrim"></div>
+
       <script>
+        $(document).ajaxStart(function() {
+          $('#scrim').fadeToggle(300);
+        });
+
         $('#generatedForm').submit(function() {
           form = $(this);
           $formData = new FormData(document.querySelector('#generatedForm'));
@@ -392,13 +415,12 @@ $(document).ready(function() {
               type: 'POST',
               url: 'https://marknolledo.pythonanywhere.com/sibyl/write',
               data: {tableName: $formId.value, formData: JSON.stringify($formValues)},
-              error: function()
+              error: function(response)
               {
-                 alert("Request Failed");
+                 alert("Request Failed: " + response);
               },
               success: function(response)
               {
-                 //alert('Request Sent');
                  console.log(response);
                  window.location.replace('https://marknolledo.pythonanywhere.com/sibyl/thanks');
               }
@@ -436,5 +458,24 @@ $(document).ready(function() {
     element.click();
 
     document.body.removeChild(element);
+    $('#scrim').fadeIn(300, function() {
+      $('#uploader--parent-container').fadeIn(300);
+    });
   }
+
+  // Scrim and uploader controls
+  document.querySelector('#uploader').addEventListener('change', function() {
+    if ($(this).value != '') {
+      $('#submit--notifier').fadeIn(300);
+    }
+    else {
+      $('#submit--notifier').fadeOut(300);
+    }
+  });
+
+  document.querySelector('#scrim').addEventListener('click', function() {
+    $('#uploader--parent-container').fadeOut(300, function() {
+      $('#scrim').fadeOut(300);
+    });
+  });
 });

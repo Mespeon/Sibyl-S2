@@ -13,7 +13,8 @@
   <script src="/js/startForm.js"></script>
 
   <link rel="stylesheet" href="/css/builder.css">
-  <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' type='text/css'> -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
   <div id="wrapper">
@@ -24,7 +25,6 @@
 
     <div class="builder--subheader-container">
       <span class="builder--subheader">Use this form builder to generate your own awesomeness form.</span>
-      <!-- <button id="getXML">Get Form XML</button> -->
     </div>
 
     <!-- The form builder and renderer itself -->
@@ -82,6 +82,27 @@
 
     <!-- PAGE BACKGROUND -->
     <div id="page--splitter-background"></div>
+  </div>
+
+  <!-- SCRIM + UPLOADER DIV -->
+  <div id="scrim"></div>
+  <div id="uploader--parent-container">
+    <div id="uploader--child-container">
+      <h1>One last step.</h1>
+      <span>Select the file we just downloaded for you in the file picker below.</span>
+      <span>The file is most likely located in your Downloads folder.</span>
+      <div id="uploader--form-container">
+        <form id="fileUploader" action="https://sibylforms.000webhostapp.com/process_file.php" method="post" enctype="multipart/form-data" name="fileUploader">
+          <input id="uploader" type="file" name="files" required/>
+          <div id="submit--notifier">
+            <span>Click on the button below.</span>
+            <span>We'll take care of uploading this file to our server.</span>
+            <input id="submit" type="submit" value="Upload File" name="submit" />
+          </div>
+        </form>
+      </div>
+      <span>You'll be redirected to another page if the upload is successful.</span>
+    </div>
   </div>
 </body>
 </html>
