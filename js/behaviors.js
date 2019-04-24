@@ -29,8 +29,10 @@ document.querySelector('#open--formBuilder').addEventListener('click', function(
 $(document).ready(function() {
   $(this).ajaxStart(function() {
     $('#async').fadeIn(300);
+    $('#scrim').fadeIn(300);
   }).ajaxStop(function() {
     $('#async').fadeOut(300);
+    $('#scrim').fadeOut(300);
   });
 });
 
@@ -62,7 +64,7 @@ $('#form-findFormId').submit(function() {
          // Append statistics values to these elements.
          $('#statistics--table-id').html(response.received['text--formId']);
          $('#statistics--response-counter').html(response.rowsCount);
-         $('#statistics--column-counter').html(response.colsCount);
+         $('#statistics--column-counter').html(response.colsCount - 1);
 
          // Iterate through the JSON result and append them into
          // the table. These will be programatically created.
@@ -264,7 +266,7 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
     $('#recents--full-container').fadeOut(300);
   }
 
-  $('#classifier--results-container').fadeOut(300);
+  $('#classifier--results-parent-container').fadeOut(300);
   $('#analysis--recent-entries').fadeOut(300, function() {
     // TABLE CREATION
     // Iterate through the JSON result and append them into
@@ -311,6 +313,10 @@ document.querySelector('#recent-entries--count-switch').addEventListener('change
   console.log('HELLO');
 });
 
+document.querySelector('#classifier-result-trigger').addEventListener('click', function() {
+  $('#classifier--results-parent-container').show();
+});
+
 // Classify trigger
 document.querySelector('#classifier-trigger').addEventListener('click', function() {
   if ($currentEntrySet == 0) {
@@ -321,7 +327,7 @@ document.querySelector('#classifier-trigger').addEventListener('click', function
     var $column = $response.cols[$currentEntrySet];
 
     console.log($currentEntrySet);
-    $('#classifier--results-container').fadeOut(300);
+    $('#classifier--results-parent-container').fadeOut(300);
     $.ajax({
       type: 'POST',
       url: 'https://marknolledo.pythonanywhere.com/sibyl/classify',
@@ -337,7 +343,11 @@ document.querySelector('#classifier-trigger').addEventListener('click', function
         var positiveAverage = response.positiveAverage;
         var negatives = response.negatives;
         var positives = response.positives;
+        var positiveLexes = response.positiveLexes;
+        var negativeLexes = response.negativeLexes;
+        var ecl = response.entryClassification;
 
+        // Single values
         $('#classifier--classification').html(classification);
         $('#positive').html(positiveAverage + '% Positive');
         $('#negative').html(negativeAverage + '% Negative');
@@ -345,7 +355,75 @@ document.querySelector('#classifier-trigger').addEventListener('click', function
         $('#classifier--pos-count').html(positives);
         $('#classifier--neg-count').html(negatives);
 
-        $('#classifier--results-container').fadeIn(300);
+        // Reset tables first
+        $('#classifier--lexicon-distribution-positive').html('');
+        $('#classifier--lexicon-distribution-negative').html('');
+        $('#classifier--entry-classification').html('');
+
+        // Query tables
+        $lexiconPositive = document.querySelector('#classifier--lexicon-distribution-positive');
+        $lexiconNegative = document.querySelector('#classifier--lexicon-distribution-negative');
+        $eclTable = document.querySelector('#classifier--entry-classification');
+
+        // Array values
+        var plexCtr;
+        for (plexCtr = 0; plexCtr < response.positiveLexes.length; plexCtr++) {
+          var $tr_plex = document.createElement('tr');
+          var $td_plex = document.createElement('td');
+          if (plexCtr % 2 == 0) {
+            $td_plex.className = 'recent-entries--data-even';
+          }
+          else {
+            $td_plex.className = 'recent-entries--data-odd';
+          }
+          $td_plex.textContent = response.positiveLexes[plexCtr];
+          $tr_plex.append($td_plex);
+          $lexiconPositive.append($tr_plex);
+        }
+
+        var nlexCtr;
+        for (nlexCtr = 0; nlexCtr < response.negativeLexes.length; nlexCtr++) {
+          var $tr_nlex = document.createElement('tr');
+          var $td_nlex = document.createElement('td');
+          if (nlexCtr % 2 == 0) {
+            $td_nlex.className = 'recent-entries--data-even';
+          }
+          else {
+            $td_nlex.className = 'recent-entries--data-odd';
+          }
+          $td_nlex.textContent = response.negativeLexes[nlexCtr];
+          $tr_nlex.append($td_nlex);
+          $lexiconNegative.append($tr_nlex);
+        }
+
+        var eclCtr;
+        for (eclCtr = 0; eclCtr < ecl.length; eclCtr++) {
+          var $tr_class = document.createElement('tr');
+          var $tdEntry = document.createElement('td');
+          var $tdClassification = document.createElement('td');
+
+          // Class attachment
+          if (ecl[eclCtr] == 'pos') {
+            $tdEntry.className = 'classification--data-positive';
+            $tdClassification.className = 'classification--data-positive';
+          }
+          else {
+            $tdEntry.className = 'classification--data-negative';
+            $tdClassification.className = 'classification--data-negative';
+          }
+
+          // Data attachment
+          $tdEntry.textContent = $response.rows[eclCtr][$currentEntrySet];
+          $tdClassification.textContent = ecl[eclCtr];
+
+          // Append to <tr> in order
+          $tr_class.append($tdEntry);
+          $tr_class.append($tdClassification);
+
+          $eclTable.append($tr_class);
+        }
+
+        $('#classifier--results-parent-container').fadeIn(300);
       }
     });
     return false;

@@ -29,6 +29,7 @@
         </form>
         <div class="notice-group">
           <span class="regular">Forgot your ID? Try looking for the HTML file the form builder made for you before; the number is the form ID.</span>
+          <a href="#" id="classifier-result-trigger">Show me</a>
         </div>
       </div>
 
@@ -42,7 +43,7 @@
               <tr id="statistics--table-headers">
                 <td>Form ID</td>
                 <td>Response Count</td>
-                <td>Column Count</td>
+                <td>Response Fields</td>
                 <td>Filter</td>
                 <td>View</td>
               </tr>
@@ -66,6 +67,10 @@
             <div id="recents--full-container">
               <div id="recents--assist-container" class="recents--child-container">
               </div>
+
+              <!-- DISTRIBUTION VIEW -->
+              <div id="distribution--parent-container">
+              </div>
             </div>
 
             <!-- RESPONSE FILTERED VIEW -->
@@ -80,29 +85,56 @@
                 <span>While this sounds awesome, make sure that the chosen entry set could possibly be analyzed for sentiment, or this will return a really irregular result. You have been warned.</span>
               </div>
               <button id="classifier-trigger">Perform Sentiment Analysis on Current Entries</button>
-              <table id="classifier--results-container">
-                <tr class="classifier--results-headers">
-                  <td>Classification</td>
-                  <td colspan='2'>Polarity</td>
-                </tr>
+              <div id="classifier--results-parent-container">
+                <h2>Summary</h2>
+                <!-- CLASSIFICATION RESULTS SUMMARY -->
+                <table id="classifier--results-container">
+                  <tr class="classifier--results-headers">
+                    <td>Classification</td>
+                    <td colspan='2'>Polarity</td>
+                  </tr>
 
-                <tr>
-                  <td id="classifier--classification">??</td>
-                  <td colspan='2'><span id="positive">??</span><span id="negative">??</span></td>
-                </tr>
+                  <tr>
+                    <td id="classifier--classification">??</td>
+                    <td colspan='2'><span id="positive">??</span><span id="negative">??</span></td>
+                  </tr>
 
-                <tr class="classifier--results-headers">
-                  <td>Entries Classified</td>
-                  <td>Positives</td>
-                  <td>Negatives</td>
-                </tr>
+                  <tr class="classifier--results-headers">
+                    <td>Entries Classified</td>
+                    <td>Positives</td>
+                    <td>Negatives</td>
+                  </tr>
 
-                <tr id="classifier--statistics-container">
-                  <td id="classifier--entry-count">0</td>
-                  <td id="classifier--pos-count">0</td>
-                  <td id="classifier--neg-count">0</td>
-                </tr>
-              </table>
+                  <tr id="classifier--statistics-container">
+                    <td id="classifier--entry-count">0</td>
+                    <td id="classifier--pos-count">0</td>
+                    <td id="classifier--neg-count">0</td>
+                  </tr>
+                </table>
+
+                <!-- LEXICON DISTRIBUTION -->
+                <h2>Lexicon Distribution</h2>
+                <!-- Positive -->
+                <div id="lex-distro-positives">
+                  <h2 class="subdivision-headers">Positives</h2>
+                  <table id="classifier--lexicon-distribution-positive" class="display-table">
+                  </table>
+                </div>
+
+                <!-- Negative -->
+                <div id="lex-distro-negatives">
+                  <h2 class="subdivision-headers">Negatives</h2>
+                  <table id="classifier--lexicon-distribution-negative" class="display-table">
+                  </table>
+                </div>
+
+                <!-- ENTRY CLASSIFICATION -->
+                <div id="entry-classification">
+                  <h2 class="subdivision-headers">Entry Classification</h2>
+                  <table id="classifier--entry-classification" class="display-table">
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -126,6 +158,9 @@
 
   <!-- PAGE BACKGROUND -->
   <div id="page--splitter-background"></div>
+
+  <!-- SCRIM -->
+  <div id="scrim"></div>
 
   <!-- ONBOARD SCRIPTS -->
   <script src="/js/behaviors.js" defer></script>
