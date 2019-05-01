@@ -338,7 +338,7 @@ $(document).ready(function() {
 
         .fb-radio-inline, .fb-checkbox-inline {
           display: inline;
-          margin-right: 1vmin;
+          margin-right: 10vmin;
         }
 
         .fb-number {

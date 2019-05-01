@@ -40,7 +40,7 @@ $(document).ready(function() {
 $('#form-findFormId').submit(function() {
   form = $(this);
   $columnSwitch = document.querySelector('#recent-entries--data-switch');
-  $countSwitch = document.querySelector('#recent-entries--count-switch');
+  //$countSwitch = document.querySelector('#recent-entries--count-switch');
 
   $('#form-analysis-parent-container').slideUp(300);
 
@@ -62,7 +62,7 @@ $('#form-findFormId').submit(function() {
          console.log('Global variable for JSON response: ', $response);
 
          // Append statistics values to these elements.
-         $('#statistics--table-id').html(response.received['text--formId']);
+         $('#statistics--table-id').html(response.received);
          $('#statistics--response-counter').html(response.rowsCount);
          $('#statistics--column-counter').html(response.colsCount - 1);
 
@@ -80,12 +80,12 @@ $('#form-findFormId').submit(function() {
            $notice.textContent = 'No responses to show.';
            $div.append($notice);
            $columnSwitch.disabled = true;
-           $countSwitch.disabled = true;
+           //$countSwitch.disabled = true;
          }
          else {
            // If the page is not reloaded prior to update, re-enable the select fields.
            $columnSwitch.disabled = false;
-           $countSwitch.disabled = false;
+           //$countSwitch.disabled = false;
 
            // In case of a column change without reloading, show the full view table
            // then hide the filtered view table and the sentiment classifier div.
@@ -96,7 +96,7 @@ $('#form-findFormId').submit(function() {
            // PREPEND FULL VIEW TO THEIR TABLES
            var row, col;
            // Create the div, h2, and table
-           for (col = 0; col < response.colsCount; col++) {
+           for (col = 1; col < response.colsCount; col++) {
              // Child div
              var $childDiv = document.createElement('div');
              $childDiv.className = 'table-group';
@@ -115,29 +115,29 @@ $('#form-findFormId').submit(function() {
              for (row = 0; row < response.rowsCount; row++) {
                var $trFull = document.createElement('tr');
 
-               var $tdRowId = document.createElement('td');
+               //var $tdRowId = document.createElement('td');
                if (col != 0) {
                  var $tdValue = document.createElement('td');
                }
 
                if (row % 2 == 0) {
-                 $tdRowId.className = 'recent-entries--data-even';
+                 //$tdRowId.className = 'recent-entries--data-even';
                  if ($tdValue) $tdValue.className = 'recent-entries--data-even';
                }
                else {
-                 $tdRowId.className = 'recent-entries--data-odd';
+                 //$tdRowId.className = 'recent-entries--data-odd';
                  if ($tdValue) $tdValue.className = 'recent-entries--data-odd';
                }
 
                if (col != 0) {
-                 $tdRowId.textContent = response.rows[row][0];
+                 //$tdRowId.textContent = response.rows[row][0];
                  $tdValue.textContent = response.rows[row][col];
                }
                else {
-                 $tdRowId.textContent = response.rows[row][col];
+                 //$tdRowId.textContent = response.rows[row][col];
                }
 
-               $trFull.append($tdRowId);
+               //$trFull.append($tdRowId);
                if ($tdValue) $trFull.append($tdValue);
                $childTable.append($trFull);
              }
@@ -200,38 +200,38 @@ $('#form-findFormId').submit(function() {
            $currentEntrySet = 0;
          }
 
-         // Append the corresponding number of possible view limit counts depending
-         // on number of rows returned. Remove the options if they are less than the limits.
-         $counterSwitch = document.querySelector('#recent-entries--count-switch');
-         $('#recent-entries--count-switch').html('');
-
-         // Create the ALL limit option always.
-         $allSwitch = document.createElement('option');
-         $allSwitch.textContent = 'All';
-         $allSwitch.value = 'all';
-         $counterSwitch.append($allSwitch);
-
-         // Then append the following numbered limits when row counts exceed specific counts.
-         if (response.rowsCount > 10) {
-           $count10 = document.createElement('option');
-           $count10.textContent = '10';
-           $count10.value = '10';
-           $countSwitch.append($count10);
-         }
-
-         if (response.rowsCount > 50) {
-           $count50 = document.createElement('option');
-           $count50.textContent = '50';
-           $count50.value = '50';
-           $countSwitch.append($count50);
-         }
-
-         if (response.rowsCount > 100) {
-           $count100 = document.createElement('option');
-           $count100.textContent = '100';
-           $count100.value = '100';
-           $countSwitch.append($count100);
-         }
+         // // Append the corresponding number of possible view limit counts depending
+         // // on number of rows returned. Remove the options if they are less than the limits.
+         // $counterSwitch = document.querySelector('#recent-entries--count-switch');
+         // $('#recent-entries--count-switch').html('');
+         //
+         // // Create the ALL limit option always.
+         // $allSwitch = document.createElement('option');
+         // $allSwitch.textContent = 'All';
+         // $allSwitch.value = 'all';
+         // $counterSwitch.append($allSwitch);
+         //
+         // // Then append the following numbered limits when row counts exceed specific counts.
+         // if (response.rowsCount > 10) {
+         //   $count10 = document.createElement('option');
+         //   $count10.textContent = '10';
+         //   $count10.value = '10';
+         //   $countSwitch.append($count10);
+         // }
+         //
+         // if (response.rowsCount > 50) {
+         //   $count50 = document.createElement('option');
+         //   $count50.textContent = '50';
+         //   $count50.value = '50';
+         //   $countSwitch.append($count50);
+         // }
+         //
+         // if (response.rowsCount > 100) {
+         //   $count100 = document.createElement('option');
+         //   $count100.textContent = '100';
+         //   $count100.value = '100';
+         //   $countSwitch.append($count100);
+         // }
       }
   });
   return false;
@@ -258,64 +258,155 @@ function showNotifToast(type, message) {
 // Entry set switch
 document.querySelector('#recent-entries--data-switch').addEventListener('change', function() {
   var select = document.querySelector('#recent-entries--data-switch');
+  var text = select.options[select.selectedIndex].text;
+  var radioGroup = text.substring(0, 11);
+  var selectGroup = text.substring(0, 6);
+  var checkGroup = text.substring(0, 14);
   var value = select.options[select.selectedIndex].value;
+
   $currentEntrySet = value;
-  console.log($currentEntrySet);
+  console.log('Switched category: ', $currentEntrySet, text);
+  console.log(radioGroup, selectGroup, checkGroup);
 
   if ($currentEntrySet !== '') {
     $('#recents--full-container').fadeOut(300);
   }
 
-  $('#classifier--results-parent-container').fadeOut(300);
-  $('#analysis--recent-entries').fadeOut(300, function() {
-    // TABLE CREATION
-    // Iterate through the JSON result and append them into
-    // the table. These will be programatically created.
-    $('#analysis--recent-entries').html(''); // This will clear any previously appended child elements.
+  // Perform an Ajax request to the API to get statistical data of a selected column (currently limited to RADIOS, SELECTS, AND CHECKBOXES).
+  if (radioGroup == 'radio-group' || selectGroup == 'select' || checkGroup == 'checkbox-group') {
+    console.log('Requesting statistics from API...');
 
-    // The table/divs to be appended to.
-    $table = document.querySelector('#analysis--recent-entries');
+    // Hide the sentiment analysis trigger since this column is more on the quantifiable side.
+    // Then chain the Ajax request after.
+    $('#analysis--recent-entries').fadeOut(300);
+    $('#recent-entries--classifier-parent-container').fadeOut(300, function() {
+      $.ajax({
+        type: 'POST',
+        url: 'https://marknolledo.pythonanywhere.com/sibyl/statistics',
+        data: {formId: $response.received, column: text},
+        error: function(response) { showNotifToast('error', response.status); },
+        success: function(response) {
+          console.log(response);
+          $('#analysis--recent-entries').html('');  // Clear table of any previously appended elements.
+          $table = document.querySelector('#analysis--recent-entries');
 
-    // PREPEND FILTERED VIEW TO THEIR TABLES
-    var i;
-    for (i = 1; i < $response.rowsCount; i++) {
-      // Create the rows and columns (MIGHT CHANGE TO STYLIZED DIVS)
-      // Then assign them their values and CSS classes, if ever.
-      var $tr = document.createElement('tr');
-      $tr.className = 'recent-entries--row';
+          // Create table headers first
+          $tr_heading = document.createElement('tr');
+          $td_value_header = document.createElement('td');
+          $td_count_header = document.createElement('td');
+          $td_distro_header = document.createElement('td');
 
-      var $td_value = document.createElement('td');
-      if (i % 2 == 0) {
-        $td_value.className = 'recent-entries--data-even';
+          $td_value_header.className = 'recent-entries--data-heading';
+          $td_count_header.className = 'recent-entries--data-heading';
+          $td_distro_header.className = 'recent-entries--data-heading';
+
+          $td_value_header.textContent = 'Distinct Value';
+          $td_count_header.textContent = 'Count';
+          $td_distro_header.textContent = 'Percentage';
+
+          $tr_heading.append($td_value_header);
+          $tr_heading.append($td_count_header);
+          $tr_heading.append($td_distro_header);
+
+          $table.append($tr_heading);
+
+          // Append values to the table
+          var i;
+          for (i = 0; i < response.distinctValues.length; i++) {
+            var $tr = document.createElement('tr');
+            $tr.className = 'recent-entries--row';
+
+            // Distinct value name
+            var $td_distinctValue = document.createElement('td');
+            if (i % 2 == 0) {
+              $td_distinctValue.className = 'recent-entries--data-even';
+            }
+            else {
+              $td_distinctValue.className = 'recent-entries--data-odd';
+            }
+            $td_distinctValue.textContent = response.distinctValues[i];
+
+            // Distinct result count
+            var $td_distinctCount = document.createElement('td');
+            if (i % 2 == 0) {
+              $td_distinctCount.className = 'recent-entries--data-even';
+            }
+            else {
+              $td_distinctCount.className = 'recent-entries--data-odd';
+            }
+            $td_distinctCount.textContent = response.distinctCount[i];
+
+            // Distinct distribution bias
+            var $td_distinctDistribution = document.createElement('td');
+            if (i % 2 == 0) {
+              $td_distinctDistribution.className = 'recent-entries--data-even';
+            }
+            else {
+              $td_distinctDistribution.className = 'recent-entries--data-odd';
+            }
+            $td_distinctDistribution.textContent = response.distinctDistribution[i];
+          }
+
+          $tr.append($td_distinctValue);
+          $tr.append($td_distinctCount);
+          $tr.append($td_distinctDistribution);
+
+          $table.append($tr);
+
+          $('#analysis--recent-entries').fadeToggle(300);
+        }
+      });
+      return false;
+    });
+  }
+  else {
+    $('#classifier--results-parent-container').fadeOut(300);
+    $('#analysis--recent-entries').fadeOut(300, function() {
+      // TABLE CREATION
+      // Iterate through the JSON result and append them into
+      // the table. These will be programatically created.
+      $('#analysis--recent-entries').html(''); // This will clear any previously appended child elements.
+
+      // The table/divs to be appended to.
+      $table = document.querySelector('#analysis--recent-entries');
+
+      // PREPEND FILTERED VIEW TO THEIR TABLES
+      var i;
+      for (i = 0; i < $response.rowsCount; i++) {
+        // Create the rows and columns (MIGHT CHANGE TO STYLIZED DIVS)
+        // Then assign them their values and CSS classes, if ever.
+        var $tr = document.createElement('tr');
+        $tr.className = 'recent-entries--row';
+
+        var $td_value = document.createElement('td');
+        if (i % 2 == 0) {
+          $td_value.className = 'recent-entries--data-even';
+        }
+        else {
+          $td_value.className = 'recent-entries--data-odd';
+        }
+        $td_value.textContent = $response.rows[i][value];
+        $tr.append($td_value);
+
+        $table.append($tr);  // Append to level 1 parent
+      }
+      // END TABLE CREATION
+
+      $('#analysis--recent-entries').fadeToggle(300);
+      if ($currentEntrySet == 0) {
+        $('#recent-entries--classifier-parent-container').fadeOut(300);
       }
       else {
-        $td_value.className = 'recent-entries--data-odd';
+        $('#recent-entries--classifier-parent-container').fadeIn(300);
       }
-      $td_value.textContent = $response.rows[i][value];
-      $tr.append($td_value);
-
-      $table.append($tr);  // Append to level 1 parent
-    }
-    // END TABLE CREATION
-
-    $('#analysis--recent-entries').fadeToggle(300);
-    if ($currentEntrySet == 0) {
-      $('#recent-entries--classifier-parent-container').fadeOut(300);
-    }
-    else {
-      $('#recent-entries--classifier-parent-container').fadeIn(300);
-    }
-  });
+    });
+  }
 });
 
 // View count switch
-document.querySelector('#recent-entries--count-switch').addEventListener('change', function() {
-  console.log('HELLO');
-});
-
-document.querySelector('#classifier-result-trigger').addEventListener('click', function() {
-  $('#classifier--results-parent-container').show();
-});
+// document.querySelector('#recent-entries--count-switch').addEventListener('change', function() {
+//   console.log('HELLO');
+// });
 
 // Classify trigger
 document.querySelector('#classifier-trigger').addEventListener('click', function() {
@@ -323,7 +414,7 @@ document.querySelector('#classifier-trigger').addEventListener('click', function
     console.log('Current row cannot be classified.');
   }
   else {
-    var $formId = $response.received['text--formId'];
+    var $formId = $response.received;
     var $column = $response.cols[$currentEntrySet];
 
     console.log($currentEntrySet);

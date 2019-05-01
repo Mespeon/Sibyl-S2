@@ -214,14 +214,20 @@ span.regular {
   overflow: auto;
 }
 
-.recent-entries--data-odd {
+.recent-entries--data-even {
   font-size: calc(0.5rem + 1vmin);
   padding: calc(0.5rem + 1vmin);
   background-color: #eee;
 }
 
-.recent-entries--data-even {
+.recent-entries--data-odd {
   font-size: calc(0.5rem + 1vmin);
+  padding: calc(0.5rem + 1vmin);
+}
+
+.recent-entries--data-heading {
+  font-size: calc(0.5rem + 1vmin);
+  font-weight: bold;
   padding: calc(0.5rem + 1vmin);
 }
 
