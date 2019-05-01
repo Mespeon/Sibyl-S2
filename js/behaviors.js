@@ -345,13 +345,13 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
               $td_distinctDistribution.className = 'recent-entries--data-odd';
             }
             $td_distinctDistribution.textContent = response.distinctDistribution[i];
+
+            $tr.append($td_distinctValue);
+            $tr.append($td_distinctCount);
+            $tr.append($td_distinctDistribution);
+
+            $table.append($tr);
           }
-
-          $tr.append($td_distinctValue);
-          $tr.append($td_distinctCount);
-          $tr.append($td_distinctDistribution);
-
-          $table.append($tr);
 
           $('#analysis--recent-entries').fadeToggle(300);
         }
