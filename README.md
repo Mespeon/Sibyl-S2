@@ -3,7 +3,7 @@
 ##### This repository is for the Chrome extension only.
 ##### This thesis is now almost complete, but it will be continuously updated in the future.
 ## Testing and Installation
-#### Compatible with Google Chrome only! Cross-compatibility is in the works, though.
+#### Developed using Google Chrome 73 64-bit; compatible (but may be unstable) with Firefox 66 64-bit.
 1. Clone or download this repository. It will be downloaded as a ZIP file.
 2. Extract contents into a folder.
 3. Open Google Chrome.
