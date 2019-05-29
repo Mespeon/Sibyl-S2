@@ -57,6 +57,10 @@
                   </select>
                 </td> -->
               </tr>
+
+              <tr id="statistics--download-data">
+                <td id="csv-downloader-button" colspan=4><button id="download-csv-data" class="analysis--buttons-normal">Download CSV file</button></td>
+              </tr>
             </table>
           </div>
 
@@ -74,6 +78,9 @@
 
             <!-- RESPONSE FILTERED VIEW -->
             <div id="recents--filtered-container">
+              <div id="analysisChart--parent-container">
+                <canvas id="analysisChart"></canvas>
+              </div>
               <table id="analysis--recent-entries"></table>
             </div>
 
@@ -163,5 +170,8 @@
 
   <!-- ONBOARD SCRIPTS -->
   <script src="/js/behaviors.js" defer></script>
+
+  <!-- CHART.JS CDN -->
+  <script src="/js/chartJS.js"></script>
 </body>
 </html>

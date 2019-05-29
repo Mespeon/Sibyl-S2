@@ -266,7 +266,7 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
 
   $currentEntrySet = value;
   console.log('Switched category: ', $currentEntrySet, text);
-  console.log(radioGroup, selectGroup, checkGroup);
+  //console.log(radioGroup, selectGroup, checkGroup);
 
   if ($currentEntrySet !== '') {
     $('#recents--full-container').fadeOut(300);
@@ -353,6 +353,106 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
             $table.append($tr);
           }
 
+          // CHART CREATION
+          // Clear the parent container first
+          // This is done so that the previous chart data won't interfere
+          // with the new one.
+          var chartContainer = document.getElementById('analysisChart--parent-container');
+          $('#analysisChart--parent-container').html('');
+
+          // Append a new chart of the same ID
+          var $chart = document.createElement('canvas');
+          $chart.id = 'analysisChart';
+          chartContainer.append($chart);
+
+          // Set chart context
+          var chartContext = document.getElementById('analysisChart').getContext('2d');
+
+          // Chart Dataset
+          var chartData = {
+            labels: [],
+
+            datasets: [{
+              label: '',
+              backgroundColor: [
+                'rgba(255,218,51,0.5)',
+                'rgba(0,169,142,0.5)',
+                'rgba(255,88,146,0.5)',
+                'rgba(255,130,218,0.5)',
+                'rgba(0,169,219,0.5)'
+              ],
+              borderColor: [
+                'rgba(255,218,51,0.8)',
+                'rgba(0,169,142,0.8)',
+                'rgba(255,88,146,0.8)',
+                'rgba(255,130,218,0.8)',
+                'rgba(0,169,219,0.8)'
+              ],
+              borderWidth: 3,
+              borderSkipped: 'bottom',
+              data: []
+            }]
+          };
+
+          // Chart Options
+          var chartOptions = {
+            legend: {
+              labels: {
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: { beginAtZero: true }
+              }],
+
+              xAxes: [{
+                barThickness: 'flex'
+              }]
+            },
+            title: {
+              display: true,
+              text: '?',
+              fontSize: 24
+            },
+            events: ['mousemove']
+          }
+
+          // Set chart title prior to instantiating it
+          chartOptions.title.text = text;
+
+          // Instantiate the chart
+          var chart = new Chart(chartContext, {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+          });
+
+          // USED FOR POPPING DATA FROM THE CHART
+          // for (var clean = 0; clean <= response.distinctValues.length-1; clean++) {
+          //   // Clean the dataset and labels first
+          //   chartData.labels.pop();
+          //   chartData.datasets.forEach((dataset) => {
+          //     dataset.data.pop();
+          //     dataset.label = '';
+          //   });
+          //   chart.update();
+          // }
+
+          // Iterate through the data and push them to the chart
+          for (var s = 0; s <= response.distinctValues.length-1; s++) {
+            chartData.labels.push(response.distinctValues[s]);
+            chartData.datasets.forEach((dataset) => {
+              dataset.data.push(response.distinctCount[s]);
+              dataset.label = 'Response';
+            });
+            chart.update();
+          }
+
+          // Show the chart
+          $('#analysisChart').fadeIn(300);
+
+          // Toggle parent container display
           $('#analysis--recent-entries').fadeToggle(300);
         }
       });
@@ -360,6 +460,9 @@ document.querySelector('#recent-entries--data-switch').addEventListener('change'
     });
   }
   else {
+    // Hide the graphic chart if shown
+    $('#analysisChart').fadeOut(300);
+
     $('#classifier--results-parent-container').fadeOut(300);
     $('#analysis--recent-entries').fadeOut(300, function() {
       // TABLE CREATION
@@ -519,4 +622,45 @@ document.querySelector('#classifier-trigger').addEventListener('click', function
     });
     return false;
   }
+});
+
+// CSV downloader
+document.querySelector('#download-csv-data').addEventListener('click', function() {
+  function csvConversion(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+      var line = '';
+      for (var index in array[i]) {
+        if (line != '') line += ','
+        line += array[i][index];
+      }
+
+      str += line + '\r\n';
+    }
+
+    return str;
+  }
+
+  function exportCSV(items, fileTitle) {
+    // Object conversion to JSON
+    var responseJSON = JSON.stringify(items);
+    var csv = csvConversion(responseJSON);
+    var exportedFileName = fileTitle + '.csv' || 'export.csv';
+
+    var blob = new Blob([csv], {type: 'text/csv;charset=utf-8'});
+    var link = document.createElement('a');
+    if (link.download !== undefined) {
+      var url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', exportedFileName);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
+
+  exportCSV($response.rows, $response.received);
 });

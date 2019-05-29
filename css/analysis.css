@@ -157,8 +157,17 @@ span.regular {
   font-weight: bold;
 }
 
+#csv-downloader-button {
+  text-align: center;
+  padding-bottom: calc(0.5rem + 1vmin);
+}
+
 #analysis--recent-entries-container {
   margin-top: calc(0.5rem + 1vmin);
+}
+
+#analysisChart {
+  display: none;
 }
 
 #recent-entries--data-switch, #recent-entries--count-switch {
